@@ -1,113 +1,146 @@
 "use client"
 
 const brands = [
-  { name: "SutraHR", src: "/assets/SutraHR_logo.png" },
-  { name: "Autofina", src: "/assets/autofina_robotics.png" },
-  { name: "Flying Club", src: "/assets/flying_club_logo.png" },
-  { name: "Funpool", src: "/assets/funpool_logo.png" },
-  { name: "Logo New", src: "/assets/logo_new.png" },
-  { name: "Nosh Nook", src: "/assets/logo_nosh_nook-removebg.png" },
-  { name: "New 2", src: "/assets/new2.png" },
-  { name: "Newww", src: "/assets/newwww.png" },
-  { name: "Omicron", src: "/assets/omicronlogo.png" },
-  { name: "Raju Bhai", src: "/assets/raju bhai logo bg removed.png" },
+  { name: "SutraHR",      src: "/assets/SutraHR_logo.png" },
+  { name: "Autofina",     src: "/assets/autofina_robotics.png" },
+  { name: "Flying Club",  src: "/assets/flying_club_logo.png" },
+  { name: "Funpool",      src: "/assets/funpool_logo.png" },
+  { name: "Logo New",     src: "/assets/logo_new.png" },
+  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png" },
+  { name: "New 2",        src: "/assets/new2.png" },
+  { name: "Newww",        src: "/assets/newwww.png" },
+  { name: "Omicron",      src: "/assets/omicronlogo.png" },
+  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png" },
 ]
 
-// Desktop positions — scattered top & bottom like the reference
-const desktopPositions = [
-  { top:  8, left:  6,  rotate: -12 },
-  { top: 14, left: 26,  rotate:  8  },
-  { top:  6, left: 48,  rotate: -4  },
-  { top: 12, left: 68,  rotate: 14  },
-  { top:  7, left: 86,  rotate:  6  },
-  { top: 70, left:  6,  rotate: -6  },
-  { top: 74, left: 26,  rotate: -12 },
-  { top: 68, left: 48,  rotate:  4  },
-  { top: 72, left: 68,  rotate: -8  },
-  { top: 68, left: 88,  rotate: 10  },
+// Top row: 5 logos scattered above the text
+// Bottom row: 5 logos scattered below the text
+// top/left in % relative to the section, rotate in degrees
+const positions = [
+  // ── Top row ──
+  { top:  9, left:  7,  rotate: -13 },
+  { top: 16, left: 28,  rotate:   8 },
+  { top:  8, left: 50,  rotate:  -4 },
+  { top: 14, left: 72,  rotate:  12 },
+  { top:  8, left: 88,  rotate:   7 },
+  // ── Bottom row ──
+  { top: 70, left:  8,  rotate:  -6 },
+  { top: 76, left: 28,  rotate: -11 },
+  { top: 68, left: 50,  rotate:   5 },
+  { top: 74, left: 72,  rotate:  -9 },
+  { top: 70, left: 90,  rotate:  10 },
 ]
 
-// Mobile positions — same idea but condensed
+// Separate tighter positions for mobile so nothing bleeds off-screen
 const mobilePositions = [
-  { top:  6,  left:  5,  rotate: -12 },
-  { top:  6,  left: 40,  rotate:  6  },
-  { top:  6,  left: 74,  rotate: -5  },
-  { top: 22,  left: 22,  rotate:  8  },
-  { top: 22,  left: 60,  rotate: -10 },
-  { top: 66,  left:  5,  rotate: -5  },
-  { top: 66,  left: 38,  rotate: 10  },
-  { top: 66,  left: 72,  rotate: -6  },
-  { top: 80,  left: 18,  rotate:  8  },
-  { top: 80,  left: 60,  rotate: -8  },
+  { top:  5,  left: 10,  rotate: -12 },
+  { top:  5,  left: 42,  rotate:   6 },
+  { top:  5,  left: 76,  rotate:  -5 },
+  { top: 22,  left: 24,  rotate:   9 },
+  { top: 22,  left: 62,  rotate: -10 },
+  { top: 65,  left: 10,  rotate:  -6 },
+  { top: 65,  left: 42,  rotate:  10 },
+  { top: 65,  left: 76,  rotate:  -7 },
+  { top: 80,  left: 24,  rotate:   8 },
+  { top: 80,  left: 62,  rotate:  -9 },
 ]
 
 export default function TrustedBy() {
   return (
     <section
-      className="w-full overflow-hidden relative bg-white"
-      style={{ height: "clamp(520px, 80vw, 820px)" }}
+      className="w-full bg-white relative"
+      style={{ height: "clamp(480px, 75vw, 800px)", overflow: "hidden" }}
       aria-label="Trusted by leading brands"
     >
-      {/* Scattered logos — desktop */}
-      <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none z-20" aria-hidden="true">
+      {/* ── Scattered logos (desktop) ── */}
+      <div
+        className="hidden md:block absolute inset-0 pointer-events-none select-none"
+        style={{ zIndex: 20 }}
+        aria-hidden="true"
+      >
         {brands.map((brand, i) => (
           <div
             key={brand.name}
             className="absolute"
             style={{
-              top: `${desktopPositions[i].top}%`,
-              left: `${desktopPositions[i].left}%`,
-              transform: `translate(-50%, -50%) rotate(${desktopPositions[i].rotate}deg)`,
+              top:       `${positions[i].top}%`,
+              left:      `${positions[i].left}%`,
+              transform: `translate(-50%, -50%) rotate(${positions[i].rotate}deg)`,
             }}
           >
             <img
               src={brand.src}
               alt={brand.name}
-              className={`w-auto object-contain ${brand.name === "Newww" ? "invert opacity-90" : ""}`}
-              style={{ height: "clamp(40px, 4.5vw, 72px)", maxWidth: "clamp(120px, 14vw, 260px)" }}
+              style={{
+                height:   "clamp(36px, 4vw, 68px)",
+                maxWidth: "clamp(100px, 13vw, 240px)",
+                width: "auto",
+                objectFit: "contain",
+                filter: brand.name === "Newww" ? "invert(1)" : "none",
+                opacity: brand.name === "Newww" ? 0.9 : 1,
+              }}
             />
           </div>
         ))}
       </div>
 
-      {/* Scattered logos — mobile */}
-      <div className="md:hidden absolute inset-0 w-full h-full pointer-events-none select-none z-20" aria-hidden="true">
+      {/* ── Scattered logos (mobile) ── */}
+      <div
+        className="md:hidden absolute inset-0 pointer-events-none select-none"
+        style={{ zIndex: 20 }}
+        aria-hidden="true"
+      >
         {brands.map((brand, i) => (
           <div
             key={brand.name}
             className="absolute"
             style={{
-              top: `${mobilePositions[i].top}%`,
-              left: `${mobilePositions[i].left}%`,
+              top:       `${mobilePositions[i].top}%`,
+              left:      `${mobilePositions[i].left}%`,
               transform: `translate(-50%, -50%) rotate(${mobilePositions[i].rotate}deg)`,
             }}
           >
             <img
               src={brand.src}
               alt={brand.name}
-              className={`w-auto object-contain ${brand.name === "Newww" ? "invert opacity-90" : ""}`}
-              style={{ height: "clamp(28px, 6vw, 48px)", maxWidth: "clamp(80px, 22vw, 160px)" }}
+              style={{
+                height:   "clamp(24px, 6.5vw, 44px)",
+                maxWidth: "clamp(70px, 24vw, 140px)",
+                width: "auto",
+                objectFit: "contain",
+                filter: brand.name === "Newww" ? "invert(1)" : "none",
+                opacity: brand.name === "Newww" ? 0.9 : 1,
+              }}
             />
           </div>
         ))}
       </div>
 
-      {/* Giant scrolling text — centred vertically */}
+      {/* ── Giant scrolling marquee — centred in the section ── */}
       <div
-        className="absolute inset-0 flex items-center justify-center z-10"
-        style={{ pointerEvents: "none" }}
+        className="absolute inset-x-0"
+        style={{
+          top: "50%",
+          transform: "translateY(-50%)",
+          overflow: "hidden",
+          zIndex: 10,
+        }}
       >
-        <div className="scroll-text-track whitespace-nowrap" aria-label="Trusted by the best" style={{ userSelect: "none" }}>
+        <div
+          className="scroll-text-track whitespace-nowrap"
+          aria-label="Trusted by the best"
+          style={{ userSelect: "none" }}
+        >
           {[...Array(4)].map((_, i) => (
             <span
               key={i}
               className="font-black uppercase"
               style={{
-                fontSize: "clamp(3.5rem, 14vw, 12rem)",
-                lineHeight: 1,
-                color: "var(--sol-black)",
+                fontSize:      "clamp(3.5rem, 14vw, 12rem)",
+                lineHeight:    1,
+                color:         "var(--sol-black)",
                 letterSpacing: "-0.04em",
-                paddingRight: "4vw",
+                paddingRight:  "4vw",
               }}
             >
               {"TRUSTED BY THE BEST\u00A0\u00A0\u00A0"}
