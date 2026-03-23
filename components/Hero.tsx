@@ -111,12 +111,12 @@ function MobileHero() {
         style={{ height: "70svh", minHeight: 420 }}
       >
         <video
-          src="/assets/videos/Mumbai_Most_Premium_Coworking_Space.mp4"
+          src="/assets/videos/Mumbai_Most_Premium_Coworking_Space_optimized.mp4"
           autoPlay
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: "brightness(0.5)" }}
         />
@@ -166,7 +166,7 @@ function MobileHero() {
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                preload="none"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               {/* Gradient */}
@@ -397,9 +397,9 @@ function DesktopHero() {
       {/* ─── Desktop about section ─── */}
       <section id="about" className="relative w-full overflow-hidden" style={{ height: "100vh", minHeight: 560 }}>
         <video
-          src="/assets/videos/Mumbai_Most_Premium_Coworking_Space.mp4"
+          src="/assets/videos/Mumbai_Most_Premium_Coworking_Space_optimized.mp4"
           autoPlay loop muted playsInline
-          preload="metadata"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: "brightness(0.55)" }}
         />
