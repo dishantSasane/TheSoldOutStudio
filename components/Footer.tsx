@@ -99,10 +99,31 @@ export default function Footer() {
         </div>
 
         <div
-          className="pt-6 text-center text-xs"
+          className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
           style={{ borderTop: "1px solid var(--sol-border-dark)", color: "var(--sol-light-grey)" }}
         >
-          &copy; 2026 by The SoldOut Studio.
+          <span>&copy; 2026 by The SoldOut Studio.</span>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://www.instagram.com/thesoldoutstudio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
+              aria-label="Instagram"
+            >
+              <InstagramIcon size={14} />
+              The SoldOut Studio
+            </a>
+            <a
+              href="https://wa.me/919876543210"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+              aria-label="WhatsApp"
+            >
+              WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,8 +1,9 @@
 const WA_NUMBER = "919876543210"
 const WA_MESSAGE = encodeURIComponent(
-  "Hi! I need to grow my brand. Let's connect and explore what SoldOut Labs can do for me!"
+  "Hey, I want to make my brand stand out. Let's connect and see how SoldOut can help."
 )
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`
+const IG_URL = "https://www.instagram.com/thesoldoutstudio"
 
 function WhatsAppIcon({ size = 32 }: { size?: number }) {
   return (
@@ -16,6 +17,16 @@ function WhatsAppIcon({ size = 32 }: { size?: number }) {
   )
 }
 
+function InstagramIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
 export default function ConnectSection() {
   return (
     <section id="contact" className="w-full" style={{ backgroundColor: "var(--sol-red)" }} aria-label="Connect with us">
@@ -25,15 +36,39 @@ export default function ConnectSection() {
         <div className="flex-1 text-center md:text-left">
           <h2
             className="font-black uppercase text-white leading-none"
-            style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)", letterSpacing: "-0.03em" }}
+            style={{ fontSize: "clamp(3rem, 8vw, 6rem)", letterSpacing: "-0.03em" }}
           >
-            CONNECT
+            READY TO GET
             <br />
-            WITH US
+            SOLDOUT?
           </h2>
           <p className="mt-4 md:mt-6 text-base md:text-lg leading-relaxed max-w-xs mx-auto md:mx-0" style={{ color: "rgba(255,255,255,0.9)" }}>
-            Ready to put your brand in the spotlight? Let&apos;s talk.
+            Ready to grow your brand and stand out? Let&apos;s make it happen.
           </p>
+
+          {/* Social links */}
+          <div className="flex items-center gap-4 mt-6 justify-center md:justify-start">
+            <a
+              href={WA_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 hover:bg-white/25 transition-colors text-white text-sm font-semibold"
+              aria-label="WhatsApp"
+            >
+              <WhatsAppIcon size={20} />
+              WhatsApp
+            </a>
+            <a
+              href={IG_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 hover:bg-white/25 transition-colors text-white text-sm font-semibold"
+              aria-label="Instagram"
+            >
+              <InstagramIcon size={18} />
+              The SoldOut Studio
+            </a>
+          </div>
         </div>
 
         {/* Right — WhatsApp CTA */}
@@ -53,19 +88,25 @@ export default function ConnectSection() {
             </div>
           </a>
 
+          {/* Limited slots badge */}
+          <div className="flex items-center gap-2 w-full max-w-sm">
+            <span className="w-2 h-2 rounded-full flex-shrink-0 animate-pulse" style={{ backgroundColor: "#fff" }} />
+            <p className="text-sm font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>
+              Limited slots available each month
+            </p>
+          </div>
+
           {/* Pre-typed message preview */}
           <div className="w-full max-w-sm rounded-2xl p-4 md:p-5 shadow-inner" style={{ backgroundColor: "rgba(0,0,0,0.15)" }}>
             <p className="text-xs mb-2 uppercase tracking-widest font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>
               Pre-filled message
             </p>
             <p className="text-sm leading-relaxed italic" style={{ color: "#fff" }}>
-              &ldquo;Hi! I need to grow my brand. Let&apos;s connect and explore what SoldOut Labs can do for me!&rdquo;
+              &ldquo;Hey, I want to make my brand stand out. Let&apos;s connect and see how SoldOut can help.&rdquo;
             </p>
           </div>
-
         </div>
       </div>
     </section>
   )
 }
-

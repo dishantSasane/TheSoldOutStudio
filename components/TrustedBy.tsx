@@ -1,18 +1,18 @@
 "use client"
 
-// Each logo gets its own size — bottom-row logos boosted significantly
+// Bottom logos get a much bigger boost based on visual feedback
 const brands = [
-  { name: "SutraHR",      src: "/assets/SutraHR_logo.png",                    deskH: 72,  mobH: 54 },
-  { name: "Autofina",     src: "/assets/autofina_robotics.png",               deskH: 88,  mobH: 66 },
-  { name: "Flying Club",  src: "/assets/flying_club_logo.png",                deskH: 96,  mobH: 72 },
-  { name: "Funpool",      src: "/assets/funpool_logo.png",                    deskH: 100, mobH: 76 },
-  { name: "Logo New",     src: "/assets/logo_new.png",                        deskH: 80,  mobH: 60 },
-  // Bottom row — pushed up big
-  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png",         deskH: 110, mobH: 80 },
-  { name: "New 2",        src: "/assets/new2.png",                            deskH: 110, mobH: 78 },
-  { name: "Newww",        src: "/assets/newwww.png",                          deskH: 100, mobH: 74, invert: true },
-  { name: "Omicron",      src: "/assets/omicronlogo.png",                     deskH: 108, mobH: 80 },
-  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png",       deskH: 112, mobH: 82 },
+  { name: "SutraHR",      src: "/assets/SutraHR_logo.png",                    deskH: 80,  mobH: 58 },
+  { name: "Autofina",     src: "/assets/autofina_robotics.png",               deskH: 96,  mobH: 70 },
+  { name: "Flying Club",  src: "/assets/flying_club_logo.png",                deskH: 104, mobH: 78 },
+  { name: "Funpool",      src: "/assets/funpool_logo.png",                    deskH: 110, mobH: 82 },
+  { name: "Logo New",     src: "/assets/logo_new.png",                        deskH: 90,  mobH: 66 },
+  // Bottom row — significantly larger
+  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png",         deskH: 140, mobH: 100 },
+  { name: "New 2",        src: "/assets/new2.png",                            deskH: 136, mobH: 96  },
+  { name: "Newww",        src: "/assets/newwww.png",                          deskH: 130, mobH: 92, invert: true },
+  { name: "Omicron",      src: "/assets/omicronlogo.png",                     deskH: 138, mobH: 98  },
+  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png",       deskH: 142, mobH: 102 },
 ]
 
 const desktopPositions = [
@@ -21,11 +21,11 @@ const desktopPositions = [
   { top:  8, left: 50,  rotate:  -4 },
   { top: 14, left: 72,  rotate:  12 },
   { top:  8, left: 88,  rotate:   7 },
-  { top: 72, left:  8,  rotate:  -6 },
-  { top: 79, left: 28,  rotate: -11 },
-  { top: 70, left: 50,  rotate:   5 },
-  { top: 76, left: 72,  rotate:  -9 },
-  { top: 72, left: 90,  rotate:  10 },
+  { top: 74, left:  8,  rotate:  -6 },
+  { top: 82, left: 28,  rotate: -11 },
+  { top: 72, left: 50,  rotate:   5 },
+  { top: 78, left: 72,  rotate:  -9 },
+  { top: 74, left: 90,  rotate:  10 },
 ]
 
 const mobilePositions = [
@@ -34,21 +34,21 @@ const mobilePositions = [
   { top:  5,  left: 76,  rotate:  -5 },
   { top: 22,  left: 24,  rotate:   9 },
   { top: 22,  left: 62,  rotate: -10 },
-  { top: 67,  left: 10,  rotate:  -6 },
-  { top: 67,  left: 42,  rotate:  10 },
-  { top: 67,  left: 76,  rotate:  -7 },
-  { top: 82,  left: 24,  rotate:   8 },
-  { top: 82,  left: 62,  rotate:  -9 },
+  { top: 68,  left: 10,  rotate:  -6 },
+  { top: 68,  left: 42,  rotate:  10 },
+  { top: 68,  left: 76,  rotate:  -7 },
+  { top: 84,  left: 24,  rotate:   8 },
+  { top: 84,  left: 62,  rotate:  -9 },
 ]
 
 export default function TrustedBy() {
   return (
     <section
       className="w-full bg-white relative"
-      style={{ height: "clamp(540px, 80vw, 900px)", overflow: "hidden" }}
+      style={{ height: "clamp(560px, 82vw, 940px)", overflow: "hidden" }}
       aria-label="Trusted by leading brands"
     >
-      {/* ── Desktop logos ── */}
+      {/* Desktop logos */}
       <div className="hidden md:block absolute inset-0 pointer-events-none select-none" style={{ zIndex: 20 }} aria-hidden="true">
         {brands.map((brand, i) => (
           <div
@@ -65,7 +65,7 @@ export default function TrustedBy() {
               alt={brand.name}
               style={{
                 height:    brand.deskH,
-                maxWidth:  brand.deskH * 4.5,
+                maxWidth:  brand.deskH * 5,
                 width:     "auto",
                 objectFit: "contain",
                 filter:    brand.invert ? "invert(1)" : "none",
@@ -76,7 +76,7 @@ export default function TrustedBy() {
         ))}
       </div>
 
-      {/* ── Mobile logos ── */}
+      {/* Mobile logos */}
       <div className="md:hidden absolute inset-0 pointer-events-none select-none" style={{ zIndex: 20 }} aria-hidden="true">
         {brands.map((brand, i) => (
           <div
@@ -93,7 +93,7 @@ export default function TrustedBy() {
               alt={brand.name}
               style={{
                 height:    brand.mobH,
-                maxWidth:  brand.mobH * 3.5,
+                maxWidth:  brand.mobH * 4,
                 width:     "auto",
                 objectFit: "contain",
                 filter:    brand.invert ? "invert(1)" : "none",
@@ -104,7 +104,7 @@ export default function TrustedBy() {
         ))}
       </div>
 
-      {/* ── Scrolling marquee ── */}
+      {/* Scrolling marquee */}
       <div
         className="absolute inset-x-0"
         style={{ top: "50%", transform: "translateY(-50%)", overflow: "hidden", zIndex: 10 }}
