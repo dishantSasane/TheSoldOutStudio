@@ -19,42 +19,42 @@ function WhatsAppIcon({ size = 32 }: { size?: number }) {
 export default function ConnectSection() {
   return (
     <section id="contact" className="w-full" style={{ backgroundColor: "var(--sol-red)" }} aria-label="Connect with us">
-      <div className="max-w-6xl mx-auto px-6 md:px-10 py-24 flex flex-col md:flex-row items-center md:items-start gap-14">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-24 flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-14">
 
         {/* Left — headline */}
-        <div className="flex-1">
+        <div className="flex-1 text-center md:text-left">
           <h2
             className="font-black uppercase text-white leading-none"
-            style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)", letterSpacing: "-0.03em" }}
+            style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)", letterSpacing: "-0.03em" }}
           >
             CONNECT
             <br />
             WITH US
           </h2>
-          <p className="mt-6 text-lg leading-relaxed max-w-xs" style={{ color: "rgba(255,255,255,0.9)" }}>
+          <p className="mt-4 md:mt-6 text-base md:text-lg leading-relaxed max-w-xs mx-auto md:mx-0" style={{ color: "rgba(255,255,255,0.9)" }}>
             Ready to put your brand in the spotlight? Let&apos;s talk.
           </p>
         </div>
 
         {/* Right — WhatsApp CTA */}
-        <div className="flex-1 flex flex-col items-center md:items-start justify-center gap-8">
+        <div className="flex-1 flex flex-col items-center md:items-start justify-center gap-6 md:gap-8 w-full">
           <a
             href={WA_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 bg-white rounded-full px-8 py-5 shadow-lg transition-all hover:scale-105 hover:shadow-2xl active:scale-95"
+            className="flex items-center gap-4 bg-white rounded-full px-6 md:px-8 py-4 md:py-5 shadow-lg transition-all hover:scale-105 hover:shadow-2xl active:scale-95 w-full max-w-sm"
             style={{ textDecoration: "none" }}
             aria-label="Chat on WhatsApp"
           >
             <WhatsAppIcon size={36} />
             <div>
-              <p className="font-black text-xl leading-tight" style={{ color: "var(--sol-red)" }}>Chat on WhatsApp</p>
+              <p className="font-black text-lg md:text-xl leading-tight" style={{ color: "var(--sol-red)" }}>Chat on WhatsApp</p>
               <p className="text-sm mt-0.5" style={{ color: "#666" }}>We reply within minutes</p>
             </div>
           </a>
 
           {/* Pre-typed message preview */}
-          <div className="w-full max-w-sm rounded-2xl p-5 shadow-inner" style={{ backgroundColor: "rgba(0,0,0,0.15)" }}>
+          <div className="w-full max-w-sm rounded-2xl p-4 md:p-5 shadow-inner" style={{ backgroundColor: "rgba(0,0,0,0.15)" }}>
             <p className="text-xs mb-2 uppercase tracking-widest font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>
               Pre-filled message
             </p>
@@ -68,3 +68,4 @@ export default function ConnectSection() {
     </section>
   )
 }
+

@@ -113,13 +113,7 @@ export default function Hero() {
         >
           {/* ── Left: text panel ── */}
           <div
-            className="flex-shrink-0 flex flex-col justify-center bg-white z-20 relative"
-            style={{
-              width: "100%",
-              maxWidth: "50%",
-              height: "100%",
-              padding: "96px 48px 64px 48px",
-            }}
+            className="flex-shrink-0 flex flex-col justify-center bg-white z-20 relative w-full md:max-w-[50%] h-auto md:h-full px-6 md:px-12 pt-16 pb-10 md:pt-24 md:pb-16"
           >
             <h1
               className="hero-headline font-black uppercase"
@@ -204,12 +198,8 @@ export default function Hero() {
 
             {/* Scroll hint — fades out after first scroll */}
             <div
+              className="absolute bottom-9 left-6 md:left-12 flex items-center"
               style={{
-                position: "absolute",
-                bottom: 36,
-                left: 48,
-                display: "flex",
-                alignItems: "center",
                 gap: 10,
                 opacity: scrollProgress > 0.05 ? 0 : 1,
                 transition: "opacity 0.5s ease",
@@ -388,7 +378,7 @@ export default function Hero() {
           </div>
 
           {/* ── Mobile: stacked videos ── */}
-          <div className="flex md:hidden flex-col w-full gap-4 px-4 pb-8 overflow-y-auto">
+          <div className="flex md:hidden flex-col w-full gap-4 px-4 pb-8">
             {RIGHT_VIDEOS.map((vid, i) => (
               <div
                 key={i}
@@ -396,7 +386,7 @@ export default function Hero() {
                   backgroundColor: "#0a0a0a",
                   borderRadius: 12,
                   overflow: "hidden",
-                  height: 480,
+                  height: "min(320px, 55vw)",
                   position: "relative",
                 }}
               >
@@ -447,14 +437,11 @@ export default function Hero() {
           className="absolute inset-0"
           style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.6) 100%)" }}
         />
-        <div
-          className="absolute bottom-0 left-0 right-0 z-10 flex items-end"
-          style={{ padding: "0 40px 48px 40px", gap: 32 }}
-        >
-          <div style={{ flex: "0 0 auto", maxWidth: 560 }}>
+        <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col md:flex-row items-start md:items-end px-6 md:px-10 pb-10 md:pb-12 gap-6 md:gap-8">
+          <div className="flex-shrink-0 md:max-w-[560px]">
             <h2
               className="font-black uppercase text-white"
-              style={{ fontSize: "clamp(1.5rem, 4.8vw, 3rem)", lineHeight: 1, letterSpacing: "-0.02em" }}
+              style={{ fontSize: "clamp(1.3rem, 4.8vw, 3rem)", lineHeight: 1, letterSpacing: "-0.02em" }}
             >
               THE CREATIVE FORCE
               <br />
@@ -464,9 +451,9 @@ export default function Hero() {
             </h2>
             <div style={{ marginTop: 16, height: 4, width: 80, backgroundColor: "var(--sol-red)", borderRadius: 2 }} />
           </div>
-          <div style={{ display: "flex", alignItems: "stretch", gap: 32, marginLeft: "auto", maxWidth: 450 }}>
+          <div className="hidden md:flex items-stretch gap-8 ml-auto max-w-[450px]">
             <div style={{ width: 2, flexShrink: 0, backgroundColor: "rgba(255,255,255,0.25)" }} />
-            <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
+            <div className="flex items-center">
               <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.95rem", lineHeight: 1.75, fontWeight: 400 }}>
                 This is a space to share more about the business: who&apos;s behind it, what it does and what this site has to offer.
                 It&apos;s an opportunity to tell the story behind the business or describe a special service or product it offers.
@@ -474,6 +461,9 @@ export default function Hero() {
               </p>
             </div>
           </div>
+          <p className="md:hidden text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.85)" }}>
+            This is a space to share more about the business: who&apos;s behind it, what it does and what this site has to offer.
+          </p>
         </div>
       </section>
 
