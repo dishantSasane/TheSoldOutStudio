@@ -116,6 +116,7 @@ function MobileHero() {
           loop
           muted
           playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: "brightness(0.5)" }}
         />
@@ -165,6 +166,7 @@ function MobileHero() {
                 loop
                 muted
                 playsInline
+                preload="metadata"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               {/* Gradient */}
@@ -369,6 +371,7 @@ function DesktopHero() {
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                     style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center", backgroundColor: "#000", display: "block" }}
                   />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 40%)", pointerEvents: "none" }} />
@@ -396,6 +399,7 @@ function DesktopHero() {
         <video
           src="/assets/videos/Mumbai_Most_Premium_Coworking_Space.mp4"
           autoPlay loop muted playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: "brightness(0.55)" }}
         />

@@ -3,16 +3,16 @@
 const mobileRotations = [-12, 6, -5, 9, -10, -6, 10, -7, 8, -9]
 
 const brands = [
-  { name: "SutraHR",      src: "/assets/SutraHR_logo.png",                  deskH: 80,  mobH: 40 },
-  { name: "Autofina",     src: "/assets/autofina_robotics.png",             deskH: 96,  mobH: 44 },
-  { name: "Flying Club",  src: "/assets/flying_club_logo.png",              deskH: 104, mobH: 42 },
-  { name: "Funpool",      src: "/assets/funpool_logo.png",                  deskH: 110, mobH: 46 },
-  { name: "Logo New",     src: "/assets/logo_new.png",                      deskH: 90,  mobH: 38 },
-  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png",       deskH: 140, mobH: 40 },
-  { name: "New 2",        src: "/assets/new2.png",                          deskH: 136, mobH: 48 },
-  { name: "Newww",        src: "/assets/newwww.png",                        deskH: 130, mobH: 44, invert: true },
-  { name: "Omicron",      src: "/assets/omicronlogo.png",                   deskH: 138, mobH: 38 },
-  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png",     deskH: 142, mobH: 46 },
+  { name: "SutraHR",      src: "/assets/SutraHR_logo.png",                  deskH: 80,  mobH: 54 },
+  { name: "Autofina",     src: "/assets/autofina_robotics.png",             deskH: 96,  mobH: 64 },
+  { name: "Flying Club",  src: "/assets/flying_club_logo.png",              deskH: 104, mobH: 62 },
+  { name: "Funpool",      src: "/assets/funpool_logo.png",                  deskH: 110, mobH: 68 },
+  { name: "Logo New",     src: "/assets/logo_new.png",                      deskH: 90,  mobH: 52 },
+  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png",       deskH: 140, mobH: 54 },
+  { name: "New 2",        src: "/assets/new2.png",                          deskH: 136, mobH: 66 },
+  { name: "Newww",        src: "/assets/newwww.png",                        deskH: 130, mobH: 60, invert: true },
+  { name: "Omicron",      src: "/assets/omicronlogo.png",                   deskH: 138, mobH: 52 },
+  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png",     deskH: 142, mobH: 62 },
 ]
 
 const desktopPositions = [
