@@ -66,8 +66,7 @@ export default function Navbar() {
       >
         <div className="flex items-center justify-between px-6 md:px-10 py-3">
           <a href="#" className="flex items-center gap-2" aria-label="SoldOut Labs home">
-            <SoldOutIcon className="w-10 h-10" color="#FFFFFF" />
-            <span className="font-black text-sm leading-tight text-white">SoldOut<br />Labs</span>
+            <span className="font-black text-lg md:text-xl tracking-tight leading-none text-white">The<br />SoldOut<br />Studio</span>
           </a>
 
           <div className="hidden md:flex items-center gap-8">
@@ -121,11 +120,6 @@ export default function Navbar() {
               Contact Us
             </button>
           </nav>
-          <div className="flex gap-5 px-10 mt-auto mb-10">
-            <a href="https://www.instagram.com/soldout.labs" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <InstagramIcon size={24} className="text-white cursor-pointer" />
-            </a>
-          </div>
         </div>
       )}
     </>

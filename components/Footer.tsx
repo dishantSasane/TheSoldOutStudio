@@ -12,7 +12,7 @@ function InstagramIcon({ size = 14 }: { size?: number }) {
 
 function FooterLogo() {
   return (
-    <svg className="w-32 h-32" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="SoldOut Labs logo">
+    <svg className="w-32 h-32" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="The SoldOut Studio logo">
       <circle cx="40" cy="40" r="14" stroke="#FFFFFF" strokeWidth="3" fill="none" />
       <path d="M40 26 A14 14 0 0 1 54 40" stroke="#CC0000" strokeWidth="3" fill="none" />
       <line x1="40" y1="12" x2="40" y2="26" stroke="white" strokeWidth="3" strokeLinecap="round" />
@@ -47,8 +47,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12">
 
           {/* Logo */}
-          <div className="md:col-span-1 flex items-start">
-            <FooterLogo />
+          <div className="md:col-span-2 flex items-start">
+            <span className="font-black text-4xl md:text-5xl tracking-tight leading-none text-white">The<br />SoldOut<br />Studio</span>
           </div>
 
           {/* Site menu */}
@@ -73,37 +73,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Follow us */}
-          <div>
-            <h4 className="text-sm font-semibold mb-4 text-white">Follow us</h4>
-            <ul className="flex flex-col gap-2">
-              <li>
-                <a
-                  href="https://www.instagram.com/soldout.labs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm transition-colors hover:text-white"
-                  style={{ color: "var(--sol-light-grey)" }}
-                  aria-label="Instagram"
-                >
-                  <InstagramIcon size={14} />
-                  Instagram
-                </a>
-              </li>
-            </ul>
-          </div>
-
           {/* Contact */}
           <div>
             <h4 className="text-sm font-semibold mb-4 text-white">Contact</h4>
             <address className="not-italic flex flex-col gap-2">
-              <a
-                href="mailto:soldoutlabs.growth@gmail.com"
-                className="text-sm transition-colors hover:text-white"
-                style={{ color: "var(--sol-light-grey)" }}
-              >
-                soldoutlabs.growth@gmail.com
-              </a>
               {["Amrohi Villa, Hathi Mohalla", "Vasai West 401201"].map((line) => (
                 <span key={line} className="text-sm" style={{ color: "var(--sol-light-grey)" }}>{line}</span>
               ))}
@@ -129,7 +102,7 @@ export default function Footer() {
           className="pt-6 text-center text-xs"
           style={{ borderTop: "1px solid var(--sol-border-dark)", color: "var(--sol-light-grey)" }}
         >
-          &copy; 2026 by SoldOut Labs.
+          &copy; 2026 by The SoldOut Studio.
         </div>
       </div>
     </footer>

@@ -63,25 +63,6 @@ export default function ConnectSection() {
             </p>
           </div>
 
-          {/* Contact info */}
-          <div className="flex flex-col gap-1">
-            <a
-              href="mailto:soldoutlabs.growth@gmail.com"
-              className="text-sm transition-colors hover:text-white"
-              style={{ color: "rgba(255,255,255,0.8)" }}
-            >
-              soldoutlabs.growth@gmail.com
-            </a>
-            <a
-              href="https://www.instagram.com/soldout.labs"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm transition-colors hover:text-white"
-              style={{ color: "rgba(255,255,255,0.8)" }}
-            >
-              @soldout.labs on Instagram
-            </a>
-          </div>
         </div>
       </div>
     </section>
