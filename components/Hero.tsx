@@ -42,6 +42,7 @@ function MobileHero() {
           loop
           muted
           playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: "brightness(0.45)" }}
         />
