@@ -72,8 +72,8 @@ export default function TrustedBy() {
               src={brand.src}
               alt={brand.name}
               style={{
-                height:   "clamp(36px, 4vw, 68px)",
-                maxWidth: "clamp(100px, 13vw, 240px)",
+                height:   "clamp(50px, 5.5vw, 90px)",
+                maxWidth: "clamp(140px, 17vw, 300px)",
                 width: "auto",
                 objectFit: "contain",
                 filter: brand.name === "Newww" ? "invert(1)" : "none",
@@ -104,8 +104,8 @@ export default function TrustedBy() {
               src={brand.src}
               alt={brand.name}
               style={{
-                height:   "clamp(24px, 6.5vw, 44px)",
-                maxWidth: "clamp(70px, 24vw, 140px)",
+                height:   "clamp(36px, 9vw, 62px)",
+                maxWidth: "clamp(100px, 30vw, 180px)",
                 width: "auto",
                 objectFit: "contain",
                 filter: brand.name === "Newww" ? "invert(1)" : "none",
