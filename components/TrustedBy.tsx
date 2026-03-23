@@ -1,18 +1,17 @@
 "use client"
 
-// Bottom logos get a much bigger boost based on visual feedback
+// Each brand has its own desktop size; mobile sizes kept small to avoid bleeding on 375px screens
 const brands = [
-  { name: "SutraHR",      src: "/assets/SutraHR_logo.png",                    deskH: 80,  mobH: 58 },
-  { name: "Autofina",     src: "/assets/autofina_robotics.png",               deskH: 96,  mobH: 70 },
-  { name: "Flying Club",  src: "/assets/flying_club_logo.png",                deskH: 104, mobH: 78 },
-  { name: "Funpool",      src: "/assets/funpool_logo.png",                    deskH: 110, mobH: 82 },
-  { name: "Logo New",     src: "/assets/logo_new.png",                        deskH: 90,  mobH: 66 },
-  // Bottom row — significantly larger
-  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png",         deskH: 140, mobH: 100 },
-  { name: "New 2",        src: "/assets/new2.png",                            deskH: 136, mobH: 96  },
-  { name: "Newww",        src: "/assets/newwww.png",                          deskH: 130, mobH: 92, invert: true },
-  { name: "Omicron",      src: "/assets/omicronlogo.png",                     deskH: 138, mobH: 98  },
-  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png",       deskH: 142, mobH: 102 },
+  { name: "SutraHR",      src: "/assets/SutraHR_logo.png",                    deskH: 80,  mobH: 36 },
+  { name: "Autofina",     src: "/assets/autofina_robotics.png",               deskH: 96,  mobH: 44 },
+  { name: "Flying Club",  src: "/assets/flying_club_logo.png",                deskH: 104, mobH: 42 },
+  { name: "Funpool",      src: "/assets/funpool_logo.png",                    deskH: 110, mobH: 46 },
+  { name: "Logo New",     src: "/assets/logo_new.png",                        deskH: 90,  mobH: 38 },
+  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png",         deskH: 140, mobH: 40 },
+  { name: "New 2",        src: "/assets/new2.png",                            deskH: 136, mobH: 48 },
+  { name: "Newww",        src: "/assets/newwww.png",                          deskH: 130, mobH: 44, invert: true },
+  { name: "Omicron",      src: "/assets/omicronlogo.png",                     deskH: 138, mobH: 38 },
+  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png",       deskH: 142, mobH: 46 },
 ]
 
 const desktopPositions = [
@@ -28,17 +27,18 @@ const desktopPositions = [
   { top: 74, left: 90,  rotate:  10 },
 ]
 
+// Kept within left: 15-72% so nothing bleeds on a 375px phone
 const mobilePositions = [
-  { top:  5,  left: 10,  rotate: -12 },
-  { top:  5,  left: 42,  rotate:   6 },
-  { top:  5,  left: 76,  rotate:  -5 },
-  { top: 22,  left: 24,  rotate:   9 },
-  { top: 22,  left: 62,  rotate: -10 },
-  { top: 68,  left: 10,  rotate:  -6 },
-  { top: 68,  left: 42,  rotate:  10 },
-  { top: 68,  left: 76,  rotate:  -7 },
-  { top: 84,  left: 24,  rotate:   8 },
-  { top: 84,  left: 62,  rotate:  -9 },
+  { top:  6,  left: 15,  rotate: -12 },
+  { top:  6,  left: 44,  rotate:   6 },
+  { top:  6,  left: 72,  rotate:  -5 },
+  { top: 24,  left: 28,  rotate:   9 },
+  { top: 24,  left: 60,  rotate: -10 },
+  { top: 66,  left: 15,  rotate:  -6 },
+  { top: 66,  left: 44,  rotate:  10 },
+  { top: 66,  left: 72,  rotate:  -7 },
+  { top: 82,  left: 28,  rotate:   8 },
+  { top: 82,  left: 60,  rotate:  -9 },
 ]
 
 export default function TrustedBy() {
