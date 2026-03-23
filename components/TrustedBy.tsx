@@ -1,17 +1,18 @@
 "use client"
 
-// Each logo gets its own size (height in px) so they all look visually prominent
+// Each logo gets its own size — bottom-row logos boosted significantly
 const brands = [
-  { name: "SutraHR",      src: "/assets/SutraHR_logo.png",                    deskH: 70,  mobH: 52 },
-  { name: "Autofina",     src: "/assets/autofina_robotics.png",               deskH: 80,  mobH: 60 },
-  { name: "Flying Club",  src: "/assets/flying_club_logo.png",                deskH: 90,  mobH: 66 },
-  { name: "Funpool",      src: "/assets/funpool_logo.png",                    deskH: 80,  mobH: 58 },
-  { name: "Logo New",     src: "/assets/logo_new.png",                        deskH: 75,  mobH: 56 },
-  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png",         deskH: 88,  mobH: 64 },
-  { name: "New 2",        src: "/assets/new2.png",                            deskH: 76,  mobH: 58 },
-  { name: "Newww",        src: "/assets/newwww.png",                          deskH: 68,  mobH: 50, invert: true },
-  { name: "Omicron",      src: "/assets/omicronlogo.png",                     deskH: 84,  mobH: 62 },
-  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png",       deskH: 92,  mobH: 68 },
+  { name: "SutraHR",      src: "/assets/SutraHR_logo.png",                    deskH: 72,  mobH: 54 },
+  { name: "Autofina",     src: "/assets/autofina_robotics.png",               deskH: 88,  mobH: 66 },
+  { name: "Flying Club",  src: "/assets/flying_club_logo.png",                deskH: 96,  mobH: 72 },
+  { name: "Funpool",      src: "/assets/funpool_logo.png",                    deskH: 100, mobH: 76 },
+  { name: "Logo New",     src: "/assets/logo_new.png",                        deskH: 80,  mobH: 60 },
+  // Bottom row — pushed up big
+  { name: "Nosh Nook",    src: "/assets/logo_nosh_nook-removebg.png",         deskH: 110, mobH: 80 },
+  { name: "New 2",        src: "/assets/new2.png",                            deskH: 110, mobH: 78 },
+  { name: "Newww",        src: "/assets/newwww.png",                          deskH: 100, mobH: 74, invert: true },
+  { name: "Omicron",      src: "/assets/omicronlogo.png",                     deskH: 108, mobH: 80 },
+  { name: "Raju Bhai",    src: "/assets/raju bhai logo bg removed.png",       deskH: 112, mobH: 82 },
 ]
 
 const desktopPositions = [
@@ -20,11 +21,11 @@ const desktopPositions = [
   { top:  8, left: 50,  rotate:  -4 },
   { top: 14, left: 72,  rotate:  12 },
   { top:  8, left: 88,  rotate:   7 },
-  { top: 70, left:  8,  rotate:  -6 },
-  { top: 76, left: 28,  rotate: -11 },
-  { top: 68, left: 50,  rotate:   5 },
-  { top: 74, left: 72,  rotate:  -9 },
-  { top: 70, left: 90,  rotate:  10 },
+  { top: 72, left:  8,  rotate:  -6 },
+  { top: 79, left: 28,  rotate: -11 },
+  { top: 70, left: 50,  rotate:   5 },
+  { top: 76, left: 72,  rotate:  -9 },
+  { top: 72, left: 90,  rotate:  10 },
 ]
 
 const mobilePositions = [
@@ -33,18 +34,18 @@ const mobilePositions = [
   { top:  5,  left: 76,  rotate:  -5 },
   { top: 22,  left: 24,  rotate:   9 },
   { top: 22,  left: 62,  rotate: -10 },
-  { top: 65,  left: 10,  rotate:  -6 },
-  { top: 65,  left: 42,  rotate:  10 },
-  { top: 65,  left: 76,  rotate:  -7 },
-  { top: 80,  left: 24,  rotate:   8 },
-  { top: 80,  left: 62,  rotate:  -9 },
+  { top: 67,  left: 10,  rotate:  -6 },
+  { top: 67,  left: 42,  rotate:  10 },
+  { top: 67,  left: 76,  rotate:  -7 },
+  { top: 82,  left: 24,  rotate:   8 },
+  { top: 82,  left: 62,  rotate:  -9 },
 ]
 
 export default function TrustedBy() {
   return (
     <section
       className="w-full bg-white relative"
-      style={{ height: "clamp(520px, 78vw, 860px)", overflow: "hidden" }}
+      style={{ height: "clamp(540px, 80vw, 900px)", overflow: "hidden" }}
       aria-label="Trusted by leading brands"
     >
       {/* ── Desktop logos ── */}
@@ -64,7 +65,7 @@ export default function TrustedBy() {
               alt={brand.name}
               style={{
                 height:    brand.deskH,
-                maxWidth:  brand.deskH * 4,
+                maxWidth:  brand.deskH * 4.5,
                 width:     "auto",
                 objectFit: "contain",
                 filter:    brand.invert ? "invert(1)" : "none",

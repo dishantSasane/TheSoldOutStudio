@@ -74,7 +74,7 @@ function MobileHero() {
             className="hero-sub mt-5 text-base font-medium"
             style={{ color: "rgba(255,255,255,0.85)" }}
           >
-            No one can miss you now
+            Don&apos;t worry, It&apos;s already SoldOut.
           </p>
 
           <div className="hero-cta mt-6">
@@ -83,7 +83,7 @@ function MobileHero() {
               className="inline-flex items-center px-7 py-3.5 rounded-full font-bold text-white text-sm transition-transform active:scale-95"
               style={{ backgroundColor: "var(--sol-red)" }}
             >
-              Get a Quote
+              Start Your Growth
             </button>
           </div>
 
@@ -299,7 +299,7 @@ function DesktopHero() {
             </h1>
 
             <p className="hero-sub mt-8" style={{ color: "var(--sol-black)", fontWeight: 400, fontSize: "1.15rem" }}>
-              No one can miss you now
+              Don&apos;t worry, It&apos;s already SoldOut.
             </p>
 
             <div className="hero-cta mt-6">
@@ -308,7 +308,7 @@ function DesktopHero() {
                 className="inline-flex items-center px-8 py-3 rounded-full font-semibold transition-transform hover:scale-105"
                 style={{ backgroundColor: "var(--sol-red)", color: "#fff", fontSize: "0.95rem" }}
               >
-                Get a Quote
+                Start Your Growth
               </button>
             </div>
 
