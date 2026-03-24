@@ -53,28 +53,29 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="w-full py-20 md:py-24"
-      style={{ backgroundColor: "var(--sol-black)" }}
+      className="w-full py-12 md:py-16"
+      style={{ backgroundColor: "#EB0000" }}
       aria-label="Our services"
     >
       <div className="max-w-5xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <h2
             className="font-black uppercase"
             style={{
-              color: "var(--sol-white)",
-              fontSize: "clamp(1.6rem, 4vw, 2.8rem)",
+              color: "#FFFFFF",
+              fontFamily: "'Sora', sans-serif",
+              fontSize: "clamp(1.8rem, 3.5vw, 48px)",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
-              maxWidth: 700,
+              maxWidth: 900,
               margin: "0 auto",
             }}
           >
-            End-to-End Content &amp; Social Media Solutions
+            A FULL SPECTRUM OF SERVICES TO REACH YOUR TARGET AUDIENCE
           </h2>
-          <p className="mt-4 text-base md:text-lg" style={{ color: "var(--sol-light-grey)" }}>
-            We create, manage, and scale your digital presence with high-quality content and strategic execution.
+          <p className="mt-4 text-base md:text-lg" style={{ color: "#FFFFFF" }}>
+            From strategy to execution, we bring campaigns that deliver
           </p>
         </div>
 
@@ -85,7 +86,7 @@ export default function Services() {
               key={svc.num}
               className="service-item flex items-start gap-5 md:gap-6 py-7 md:py-8 px-2 md:px-4"
               style={{
-                borderTop: "1px solid var(--sol-border-dark)",
+                borderTop: "1px solid rgba(255,255,255,0.2)",
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(20px)",
                 transition: `opacity 0.5s ease ${i * 150}ms, transform 0.5s ease ${i * 150}ms`,
@@ -93,32 +94,29 @@ export default function Services() {
             >
               <span
                 className="font-black flex-shrink-0 leading-none"
-                style={{ fontSize: "clamp(1.8rem, 4.5vw, 3rem)", color: "var(--sol-red)", minWidth: 56 }}
+                style={{ fontSize: "clamp(1.8rem, 4.5vw, 3rem)", color: "#FFFFFF", minWidth: 56 }}
               >
                 {svc.num}
               </span>
               <div className="pt-1">
-                <h3 className="font-bold text-lg md:text-xl" style={{ color: "var(--sol-white)" }}>{svc.title}</h3>
-                <p className="mt-1 text-sm md:text-base font-semibold italic" style={{ color: "var(--sol-red)" }}>{svc.tagline}</p>
-                <p className="mt-2 text-sm md:text-base leading-relaxed" style={{ color: "var(--sol-light-grey)" }}>{svc.desc}</p>
+                <h3 className="font-bold text-lg md:text-xl" style={{ color: "#FFFFFF" }}>{svc.title}</h3>
+                <p className="mt-1 text-sm md:text-base font-semibold italic" style={{ color: "#FFFFFF" }}>{svc.tagline}</p>
+                <p className="mt-2 text-sm md:text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.8)" }}>{svc.desc}</p>
               </div>
             </div>
           ))}
-          <div style={{ borderTop: "1px solid var(--sol-border-dark)", opacity: visible ? 1 : 0, transition: `opacity 0.5s ease ${services.length * 150}ms` }} />
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.2)", opacity: visible ? 1 : 0, transition: `opacity 0.5s ease ${services.length * 150}ms` }} />
         </div>
 
-        {/* Bottom upgrade line */}
+        {/* Bottom CTA */}
         <div
           className="mt-12 text-center"
           style={{ opacity: visible ? 1 : 0, transition: `opacity 0.6s ease ${services.length * 150 + 100}ms` }}
         >
-          <p className="text-base md:text-lg font-semibold italic mb-6" style={{ color: "var(--sol-light-grey)" }}>
-            From shooting to scaling — we handle everything your brand needs to grow online.
-          </p>
           <button
             onClick={scrollToContact}
-            className="inline-flex items-center px-8 py-3 text-sm font-semibold rounded-full border transition-all hover:bg-white hover:text-black"
-            style={{ color: "var(--sol-white)", borderColor: "var(--sol-white)" }}
+            className="inline-flex items-center px-8 py-3 text-sm font-semibold rounded-full border-2 transition-all hover:bg-white hover:text-[#EB0000]"
+            style={{ color: "#FFFFFF", borderColor: "#FFFFFF", backgroundColor: "transparent" }}
           >
             Contact Us Today
           </button>
