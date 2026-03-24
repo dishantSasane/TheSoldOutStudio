@@ -20,6 +20,14 @@ const RIGHT_VIDEOS = [
   },
 ]
 
+// 4 panels for the desktop scroll experience (placeholders until horizontal videos added)
+const PANELS = [
+  { label: "Mumbai 2.0",              counter: "01" },
+  { label: "Mexican Lounge",          counter: "02" },
+  { label: "The Emirates Experience", counter: "03" },
+  { label: "Mumbai Premium",          counter: "04" },
+]
+
 /* ─────────────────────────────────────────────
    MOBILE HERO  (shown only on < md screens)
    Full-screen video background + text overlay,
@@ -169,11 +177,12 @@ function MobileHero() {
 
 /* ─────────────────────────────────────────────
    DESKTOP HERO  (shown only on >= md screens)
-   Original scroll-pinned stacking video experience
+   Wix-style scroll-driven 3D perspective stack:
+   sticky viewport, text overlay left, 4 panels
+   right that animate in with matrix3d tilt.
 ───────────────────────────────────────────── */
 function DesktopHero() {
   const sectionRef = useRef<HTMLElement>(null)
-  const stageRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
   const rafRef = useRef<number | null>(null)
@@ -189,8 +198,7 @@ function DesktopHero() {
       const scrolled = Math.max(0, -rect.top)
       const progress = Math.min(scrolled / totalScrollable, 1)
       setScrollProgress(progress)
-      const N = RIGHT_VIDEOS.length
-      const idx = Math.min(Math.floor(progress * N), N - 1)
+      const idx = Math.min(Math.floor(progress * PANELS.length), PANELS.length - 1)
       setActiveIndex(idx)
     })
   }, [])
@@ -208,63 +216,116 @@ function DesktopHero() {
     if (el) el.scrollIntoView({ behavior: "smooth" })
   }
 
-  const getPanelStyle = (i: number) => {
-    const N = RIGHT_VIDEOS.length
-    const panelStart = i / N
-    const panelActive = (i + 0.35) / N
-    if (i === 0) {
-      const exitStart = (N - 1) / N
-      if (scrollProgress >= exitStart) {
-        const t = (scrollProgress - exitStart) / (1 / N)
-        return { transform: `translateY(${-t * 6}%)`, opacity: 1, zIndex: i + 1 }
+  // Wix-style 3D perspective transform based on per-panel scroll progress.
+  // progress < 0  → panel is below, hidden (tilted perspective position)
+  // progress 0→1  → panel enters: perspective tilt flattens to none
+  // progress > 1  → panel exits upward as next panel pushes in
+  const getPanelTransform = (progress: number): { transform: string; opacity: number } => {
+    if (progress <= 0) {
+      // Below viewport — tilted, hidden when fully out of range
+      const ty = 100 - progress * 100   // 100% at progress=0, grows larger below
+      const rx = 25 - progress * 25      // 25deg at progress=0
+      const sc = Math.max(0, 0.85 + progress * 0.15)
+      return {
+        transform: `perspective(1200px) translateY(${ty}%) rotateX(${rx}deg) scale(${sc})`,
+        opacity: progress < -0.05 ? 0 : 1,
       }
-      return { transform: "translateY(0%)", opacity: 1, zIndex: i + 1 }
     }
-    if (scrollProgress < panelStart) return { transform: "translateY(100%)", opacity: 1, zIndex: i + 1 }
-    const t = Math.min((scrollProgress - panelStart) / (panelActive - panelStart), 1)
-    const eased = 1 - Math.pow(1 - t, 3)
-    return { transform: `translateY(${(1 - eased) * 100}%)`, opacity: 1, zIndex: i + 1 }
+    if (progress >= 1) {
+      // Fully in place; exit upward as subsequent panel arrives
+      const exitT = progress - 1  // 0 at in-place → 1 when next panel is fully in
+      if (exitT > 0) {
+        return { transform: `translateY(${-exitT * 100}%)`, opacity: 1 }
+      }
+      return { transform: "none", opacity: 1 }
+    }
+    // Entering: ease-out cubic interpolation from tilted/below → flat
+    const eased = 1 - Math.pow(1 - progress, 3)
+    const ty = (1 - eased) * 60
+    const rx = (1 - eased) * 25
+    const sc = 0.85 + eased * 0.15
+    return {
+      transform: `perspective(1200px) translateY(${ty}%) rotateX(${rx}deg) scale(${sc})`,
+      opacity: 1,
+    }
   }
 
-  const N = RIGHT_VIDEOS.length
-  const segmentSize = 1 / N
-  const segmentProgress = (scrollProgress - activeIndex * segmentSize) / segmentSize
+  const N = PANELS.length
+  const segmentProgress = scrollProgress * N - activeIndex
   const clampedSegment = Math.max(0, Math.min(segmentProgress, 1))
 
   return (
     <>
-      {/* ─── Desktop sticky hero ─── */}
-      {/* Outer scroll track: 500vh gives ~166vh per video for smooth reveal */}
+      {/*
+        Outer scroll track: 600vh = 6× viewport.
+        4 panels × 150vh each gives smooth per-panel transitions.
+        NOTE: overflow-x clips horizontal bleed from 3D transforms;
+        overflow-y must stay visible so position:sticky works on the child.
+      */}
       <section
         ref={sectionRef}
-        style={{ position: "relative", width: "100%", height: "500vh" }}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "600vh",
+          backgroundColor: "#ffffff",
+          overflowX: "hidden",
+        }}
       >
-        {/* Sticky viewport */}
+        {/* ── Sticky viewport — stays at top while section scrolls ── */}
         <div
           style={{
             position: "sticky",
             top: 0,
             width: "100%",
             height: "100vh",
-            display: "flex",
-            flexDirection: "row",
-            overflow: "hidden",
           }}
         >
-          {/* ── Left text panel ── */}
+          {/* ── Video / panel stack — right side ── */}
           <div
             style={{
-              width: "50%",
+              position: "absolute",
+              left: "33vw",
+              top: 0,
+              width: "67vw",
               height: "100vh",
-              backgroundColor: "#FFFFFF",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              paddingLeft: "5vw",
-              paddingRight: "3vw",
-              position: "relative",
-              zIndex: 20,
-              flexShrink: 0,
+              overflow: "hidden",
+              zIndex: 1,
+            }}
+          >
+            {PANELS.map((panel, i) => {
+              const videoProgress = scrollProgress * N - i
+              const { transform, opacity } = getPanelTransform(videoProgress)
+              return (
+                <div
+                  key={i}
+                  style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    overflow: "hidden",
+                    willChange: "transform",
+                    transform,
+                    opacity,
+                    // Placeholder: swap for <video> when landscape files are ready
+                    backgroundColor: "#F0F0F0",
+                  }}
+                />
+              )
+            })}
+          </div>
+
+          {/* ── Left text panel — overlays videos, pointer-events:none on text ── */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100vh",
+              zIndex: 2,
+              padding: "80px 0 0 4vw",
+              pointerEvents: "none",
             }}
           >
             <h1
@@ -273,13 +334,14 @@ function DesktopHero() {
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 900,
                 color: "#EB0000",
-                fontSize: "clamp(4.5rem, 9vw, 130px)",
-                lineHeight: 0.95,
-                letterSpacing: "-0.02em",
+                fontSize: "clamp(4.5rem, 10vw, 140px)",
+                lineHeight: 0.92,
                 textTransform: "uppercase",
                 hyphens: "none",
                 wordBreak: "keep-all",
                 margin: 0,
+                width: "65%",
+                pointerEvents: "none",
               }}
             >
               STEP INTO THE SPOTLIGHT WITH SOLDOUT!
@@ -288,7 +350,7 @@ function DesktopHero() {
             <p
               className="hero-sub"
               style={{
-                marginTop: 20,
+                marginTop: 24,
                 fontSize: 18,
                 color: "#333133",
                 fontWeight: 400,
@@ -297,7 +359,10 @@ function DesktopHero() {
               No one can miss you now
             </p>
 
-            <div className="hero-cta" style={{ marginTop: 32 }}>
+            <div
+              className="hero-cta"
+              style={{ marginTop: 32, pointerEvents: "auto" }}
+            >
               <button
                 onClick={scrollToContact}
                 style={{
@@ -325,100 +390,98 @@ function DesktopHero() {
                 Get a Quote
               </button>
             </div>
-
-            {/* Track indicators */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 56 }}>
-              {RIGHT_VIDEOS.map((v, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 32, height: 3, borderRadius: 2, backgroundColor: "#eee", overflow: "hidden", flexShrink: 0 }}>
-                    <div
-                      style={{
-                        height: "100%",
-                        borderRadius: 2,
-                        backgroundColor: "#EB0000",
-                        width: i < activeIndex ? "100%" : i === activeIndex ? `${clampedSegment * 100}%` : "0%",
-                        transition: i === activeIndex ? "none" : "width 0.4s ease",
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      color: i === activeIndex ? "#EB0000" : "#bbb",
-                      transition: "color 0.4s ease",
-                    }}
-                  >
-                    {v.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Scroll hint */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: 36,
-                left: "5vw",
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                opacity: scrollProgress > 0.05 ? 0 : 1,
-                transition: "opacity 0.5s ease",
-              }}
-            >
-              <div style={{ width: 1, height: 40, backgroundColor: "#EB0000", animation: "scrollPulse 1.4s ease-in-out infinite" }} />
-              <span style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#999" }}>
-                Scroll
-              </span>
-            </div>
           </div>
 
-          {/* ── Right stacking video stage ── */}
+          {/* ── Progress indicators — bottom left ── */}
           <div
-            ref={stageRef}
             style={{
-              width: "50%",
-              height: "100vh",
-              position: "relative",
-              overflow: "hidden",
-              flexShrink: 0,
+              position: "absolute",
+              bottom: 40,
+              left: "4vw",
+              zIndex: 3,
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              pointerEvents: "none",
             }}
           >
-            {RIGHT_VIDEOS.map((vid, i) => {
-              const panelStyle = getPanelStyle(i)
-              const isActive = i === activeIndex
-              return (
-                <div key={i} style={{ position: "absolute", inset: 0, willChange: "transform", ...panelStyle }}>
-                  <video
-                    src={vid.src}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
+            {PANELS.map((panel, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div
+                  style={{
+                    width: 32,
+                    height: 3,
+                    borderRadius: 2,
+                    backgroundColor: "#eee",
+                    overflow: "hidden",
+                    flexShrink: 0,
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      borderRadius: 2,
+                      backgroundColor: "#EB0000",
+                      width:
+                        i < activeIndex
+                          ? "100%"
+                          : i === activeIndex
+                          ? `${clampedSegment * 100}%`
+                          : "0%",
+                      transition: i === activeIndex ? "none" : "width 0.4s ease",
+                    }}
                   />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 40%)", pointerEvents: "none" }} />
-                  <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 3, backgroundColor: "#EB0000", borderRadius: "0 2px 2px 0", opacity: isActive ? 1 : 0, transition: "opacity 0.4s ease 0.2s" }} />
-                  <div style={{ position: "absolute", top: 28, right: 28, display: "flex", alignItems: "baseline", gap: 4, zIndex: 5 }}>
-                    <span style={{ fontSize: "2.2rem", fontWeight: 900, color: "#EB0000", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>{vid.counter}</span>
-                    <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.35)", fontWeight: 500 }}>/{String(RIGHT_VIDEOS.length).padStart(2, "0")}</span>
-                  </div>
-                  <div style={{ position: "absolute", bottom: 36, left: 24, zIndex: 5 }}>
-                    <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#EB0000", marginBottom: 4 }}>Now Playing</p>
-                    <p style={{ fontSize: "1rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.03em" }}>{vid.label}</p>
-                  </div>
                 </div>
-              )
-            })}
-            {/* Overall progress bar */}
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, backgroundColor: "rgba(255,255,255,0.08)", zIndex: 20 }}>
-              <div style={{ height: "100%", width: `${scrollProgress * 100}%`, backgroundColor: "#EB0000", transition: "width 0.05s linear" }} />
-            </div>
+                <span
+                  style={{
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: i === activeIndex ? "#EB0000" : "#bbb",
+                    transition: "color 0.4s ease",
+                  }}
+                >
+                  {panel.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Scroll hint — fades out after first scroll ── */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 36,
+              left: "5vw",
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              zIndex: 3,
+              opacity: scrollProgress > 0.05 ? 0 : 1,
+              transition: "opacity 0.5s ease",
+              pointerEvents: "none",
+            }}
+          >
+            <div
+              style={{
+                width: 1,
+                height: 40,
+                backgroundColor: "#EB0000",
+                animation: "scrollPulse 1.4s ease-in-out infinite",
+              }}
+            />
+            <span
+              style={{
+                fontSize: "0.68rem",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#999",
+              }}
+            >
+              Scroll
+            </span>
           </div>
         </div>
       </section>
