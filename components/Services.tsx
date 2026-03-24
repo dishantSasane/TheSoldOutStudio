@@ -53,7 +53,7 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="w-full py-8 md:py-12 flex flex-col justify-center"
+      className="w-full min-h-screen overflow-hidden block py-8 md:py-12 flex flex-col justify-center"
       style={{ backgroundColor: "#EB0000", minHeight: "100vh" }}
       aria-label="Our services"
     >

@@ -31,10 +31,9 @@ const desktopPositions = [
 export default function TrustedBy() {
   return (
     <section
-      className="w-full relative"
+      className="w-full min-h-screen overflow-hidden block relative"
       style={{
         backgroundColor: "#FFFFFF",
-        overflow: "hidden",
         padding: "80px 0",
         height: "clamp(540px, 80vw, 900px)",
       }}
