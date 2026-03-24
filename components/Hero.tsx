@@ -234,59 +234,108 @@ function DesktopHero() {
   return (
     <>
       {/* ─── Desktop sticky hero ─── */}
+      {/* Outer scroll track: 500vh gives ~166vh per video for smooth reveal */}
       <section
         ref={sectionRef}
-        className="relative w-full bg-white"
-        style={{ height: `${(RIGHT_VIDEOS.length + 1) * 100}vh` }}
+        style={{ position: "relative", width: "100%", height: "500vh" }}
       >
+        {/* Sticky viewport */}
         <div
-          className="sticky top-0 flex flex-row w-full overflow-hidden"
-          style={{ height: "100vh" }}
+          style={{
+            position: "sticky",
+            top: 0,
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            flexDirection: "row",
+            overflow: "hidden",
+          }}
         >
-          {/* Left text panel */}
-          <div className="flex-shrink-0 flex flex-col justify-center bg-white z-20 relative max-w-[50%] w-full h-full px-12 pt-24 pb-16">
+          {/* ── Left text panel ── */}
+          <div
+            style={{
+              width: "50%",
+              height: "100vh",
+              backgroundColor: "#FFFFFF",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              paddingLeft: "5vw",
+              paddingRight: "3vw",
+              position: "relative",
+              zIndex: 20,
+              flexShrink: 0,
+            }}
+          >
             <h1
-              className="hero-headline font-black uppercase"
+              className="hero-headline"
               style={{
-                color: "var(--sol-red)",
-                fontSize: "clamp(2.6rem, 7vw, 7.5rem)",
-                lineHeight: 0.9,
-                letterSpacing: "-0.03em",
+                fontFamily: "'Sora', sans-serif",
+                fontWeight: 900,
+                color: "#EB0000",
+                fontSize: "clamp(4.5rem, 9vw, 130px)",
+                lineHeight: 0.95,
+                letterSpacing: "-0.02em",
+                textTransform: "uppercase",
+                hyphens: "none",
+                wordBreak: "keep-all",
+                margin: 0,
               }}
             >
-              STEP INTO
-              <br />
-              THE SPOT-
-              <br />
-              LIGHT WITH
-              <br />
-              SOLDOUT!
+              STEP INTO THE SPOTLIGHT WITH SOLDOUT!
             </h1>
 
-            <p className="hero-sub mt-8" style={{ color: "var(--sol-black)", fontWeight: 400, fontSize: "1.15rem" }}>
-              Don&apos;t worry, It&apos;s already SoldOut.
+            <p
+              className="hero-sub"
+              style={{
+                marginTop: 20,
+                fontSize: 18,
+                color: "#333133",
+                fontWeight: 400,
+              }}
+            >
+              No one can miss you now
             </p>
 
-            <div className="hero-cta mt-6">
+            <div className="hero-cta" style={{ marginTop: 32 }}>
               <button
                 onClick={scrollToContact}
-                className="inline-flex items-center px-8 py-3 rounded-full font-semibold transition-transform hover:scale-105"
-                style={{ backgroundColor: "var(--sol-red)", color: "#fff", fontSize: "0.95rem" }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  padding: "14px 32px",
+                  borderRadius: 999,
+                  border: "2px solid #EB0000",
+                  color: "#EB0000",
+                  backgroundColor: "transparent",
+                  fontSize: "0.95rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "background-color 0.2s ease, color 0.2s ease",
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.backgroundColor = "#EB0000"
+                  e.currentTarget.style.color = "#FFFFFF"
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.backgroundColor = "transparent"
+                  e.currentTarget.style.color = "#EB0000"
+                }}
               >
-                Start Your Growth
+                Get a Quote
               </button>
             </div>
 
             {/* Track indicators */}
-            <div className="flex flex-col gap-4 mt-14">
+            <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 56 }}>
               {RIGHT_VIDEOS.map((v, i) => (
-                <div key={i} className="flex items-center gap-3">
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{ width: 32, height: 3, borderRadius: 2, backgroundColor: "#eee", overflow: "hidden", flexShrink: 0 }}>
                     <div
                       style={{
                         height: "100%",
                         borderRadius: 2,
-                        backgroundColor: "var(--sol-red)",
+                        backgroundColor: "#EB0000",
                         width: i < activeIndex ? "100%" : i === activeIndex ? `${clampedSegment * 100}%` : "0%",
                         transition: i === activeIndex ? "none" : "width 0.4s ease",
                       }}
@@ -298,7 +347,7 @@ function DesktopHero() {
                       fontWeight: 700,
                       letterSpacing: "0.12em",
                       textTransform: "uppercase",
-                      color: i === activeIndex ? "var(--sol-red)" : "#bbb",
+                      color: i === activeIndex ? "#EB0000" : "#bbb",
                       transition: "color 0.4s ease",
                     }}
                   >
@@ -310,18 +359,35 @@ function DesktopHero() {
 
             {/* Scroll hint */}
             <div
-              className="absolute bottom-9 left-12 flex items-center"
-              style={{ gap: 10, opacity: scrollProgress > 0.05 ? 0 : 1, transition: "opacity 0.5s ease" }}
+              style={{
+                position: "absolute",
+                bottom: 36,
+                left: "5vw",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                opacity: scrollProgress > 0.05 ? 0 : 1,
+                transition: "opacity 0.5s ease",
+              }}
             >
-              <div style={{ width: 1, height: 40, backgroundColor: "var(--sol-red)", animation: "scrollPulse 1.4s ease-in-out infinite" }} />
+              <div style={{ width: 1, height: 40, backgroundColor: "#EB0000", animation: "scrollPulse 1.4s ease-in-out infinite" }} />
               <span style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#999" }}>
                 Scroll
               </span>
             </div>
           </div>
 
-          {/* Right stacking video stage */}
-          <div ref={stageRef} className="flex-1 relative overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
+          {/* ── Right stacking video stage ── */}
+          <div
+            ref={stageRef}
+            style={{
+              width: "50%",
+              height: "100vh",
+              position: "relative",
+              overflow: "hidden",
+              flexShrink: 0,
+            }}
+          >
             {RIGHT_VIDEOS.map((vid, i) => {
               const panelStyle = getPanelStyle(i)
               const isActive = i === activeIndex
@@ -334,23 +400,24 @@ function DesktopHero() {
                     muted
                     playsInline
                     preload="metadata"
-                    style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center", backgroundColor: "#000", display: "block" }}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
                   />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 40%)", pointerEvents: "none" }} />
-                  <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 3, backgroundColor: "var(--sol-red)", borderRadius: "0 2px 2px 0", opacity: isActive ? 1 : 0, transition: "opacity 0.4s ease 0.2s" }} />
+                  <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 3, backgroundColor: "#EB0000", borderRadius: "0 2px 2px 0", opacity: isActive ? 1 : 0, transition: "opacity 0.4s ease 0.2s" }} />
                   <div style={{ position: "absolute", top: 28, right: 28, display: "flex", alignItems: "baseline", gap: 4, zIndex: 5 }}>
-                    <span style={{ fontSize: "2.2rem", fontWeight: 900, color: "var(--sol-red)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>{vid.counter}</span>
+                    <span style={{ fontSize: "2.2rem", fontWeight: 900, color: "#EB0000", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>{vid.counter}</span>
                     <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.35)", fontWeight: 500 }}>/{String(RIGHT_VIDEOS.length).padStart(2, "0")}</span>
                   </div>
                   <div style={{ position: "absolute", bottom: 36, left: 24, zIndex: 5 }}>
-                    <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--sol-red)", marginBottom: 4 }}>Now Playing</p>
+                    <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#EB0000", marginBottom: 4 }}>Now Playing</p>
                     <p style={{ fontSize: "1rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.03em" }}>{vid.label}</p>
                   </div>
                 </div>
               )
             })}
+            {/* Overall progress bar */}
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, backgroundColor: "rgba(255,255,255,0.08)", zIndex: 20 }}>
-              <div style={{ height: "100%", width: `${scrollProgress * 100}%`, backgroundColor: "var(--sol-red)", transition: "width 0.05s linear" }} />
+              <div style={{ height: "100%", width: `${scrollProgress * 100}%`, backgroundColor: "#EB0000", transition: "width 0.05s linear" }} />
             </div>
           </div>
         </div>
