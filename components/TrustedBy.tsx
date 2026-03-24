@@ -31,8 +31,13 @@ const desktopPositions = [
 export default function TrustedBy() {
   return (
     <section
-      className="w-full bg-white relative"
-      style={{ height: "clamp(540px, 80vw, 900px)", overflow: "hidden" }}
+      className="w-full relative"
+      style={{
+        backgroundColor: "#FFFFFF",
+        overflow: "hidden",
+        padding: "80px 0",
+        height: "clamp(540px, 80vw, 900px)",
+      }}
       aria-label="Trusted by leading brands"
     >
       {/* ── Desktop logos (absolute scattered) ── */}
@@ -163,20 +168,20 @@ export default function TrustedBy() {
         className="absolute inset-x-0"
         style={{ top: "50%", transform: "translateY(-50%)", overflow: "hidden", zIndex: 10 }}
       >
-        <div className="scroll-text-track whitespace-nowrap" aria-label="Trusted by the best" style={{ userSelect: "none" }}>
+        <div className="scroll-text-track whitespace-nowrap" aria-label="Trusted by" style={{ userSelect: "none" }}>
           {[...Array(4)].map((_, i) => (
             <span
               key={i}
               className="font-black uppercase"
               style={{
-                fontSize: "clamp(3.5rem, 14vw, 12rem)",
+                fontSize: "clamp(4.9rem, 19.6vw, 16.8rem)",
                 lineHeight: 1,
                 color: "var(--sol-black)",
                 letterSpacing: "-0.04em",
                 paddingRight: "4vw",
               }}
             >
-              {"TRUSTED BY THE BEST\u00A0\u00A0\u00A0"}
+              {"TRUSTED BY\u00A0\u00A0\u00A0"}
             </span>
           ))}
         </div>

@@ -53,11 +53,11 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="w-full py-12 md:py-16"
-      style={{ backgroundColor: "#EB0000" }}
+      className="w-full py-8 md:py-12 flex flex-col justify-center"
+      style={{ backgroundColor: "#EB0000", minHeight: "100vh" }}
       aria-label="Our services"
     >
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 w-full">
         {/* Header */}
         <div className="text-center mb-10">
           <h2
@@ -84,7 +84,7 @@ export default function Services() {
           {services.map((svc, i) => (
             <div
               key={svc.num}
-              className="service-item flex items-start gap-5 md:gap-6 py-7 md:py-8 px-2 md:px-4"
+              className="service-item flex items-start gap-5 md:gap-6 py-4 px-2 md:px-4"
               style={{
                 borderTop: "1px solid rgba(255,255,255,0.2)",
                 opacity: visible ? 1 : 0,
@@ -106,20 +106,6 @@ export default function Services() {
             </div>
           ))}
           <div style={{ borderTop: "1px solid rgba(255,255,255,0.2)", opacity: visible ? 1 : 0, transition: `opacity 0.5s ease ${services.length * 150}ms` }} />
-        </div>
-
-        {/* Bottom CTA */}
-        <div
-          className="mt-12 text-center"
-          style={{ opacity: visible ? 1 : 0, transition: `opacity 0.6s ease ${services.length * 150 + 100}ms` }}
-        >
-          <button
-            onClick={scrollToContact}
-            className="inline-flex items-center px-8 py-3 text-sm font-semibold rounded-full border-2 transition-all hover:bg-white hover:text-[#EB0000]"
-            style={{ color: "#FFFFFF", borderColor: "#FFFFFF", backgroundColor: "transparent" }}
-          >
-            Contact Us Today
-          </button>
         </div>
       </div>
     </section>

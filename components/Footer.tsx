@@ -1,18 +1,8 @@
 "use client"
 
-function InstagramIcon({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
-    </svg>
-  )
-}
-
 function FooterLogo() {
   return (
-    <svg className="w-32 h-32" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="The SoldOut Studio logo">
+    <svg style={{ width: "80px", height: "80px" }} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="The SoldOut Studio logo">
       <circle cx="40" cy="40" r="14" stroke="#FFFFFF" strokeWidth="3" fill="none" />
       <path d="M40 26 A14 14 0 0 1 54 40" stroke="#CC0000" strokeWidth="3" fill="none" />
       <line x1="40" y1="12" x2="40" y2="26" stroke="white" strokeWidth="3" strokeLinecap="round" />
@@ -41,20 +31,41 @@ const scrollTo = (id: string) => {
 }
 
 export default function Footer() {
-  return (
-    <footer className="w-full" style={{ backgroundColor: "var(--sol-black)" }} aria-label="Site footer">
-      <div className="max-w-6xl mx-auto px-6 md:px-10 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12">
+  const linkStyle = {
+    color: "#FFFFFF",
+    fontSize: "14px",
+    textDecoration: "none",
+    transition: "color 0.2s",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    padding: 0,
+    textAlign: "left" as const
+  }
 
+  const headingStyle = {
+    color: "#FFFFFF",
+    fontSize: "13px",
+    textTransform: "uppercase" as const,
+    letterSpacing: "0.1em",
+    fontWeight: 600,
+    marginBottom: "16px"
+  }
+
+  return (
+    <footer className="w-full" style={{ backgroundColor: "#000000", paddingTop: "64px", paddingBottom: "40px" }} aria-label="Site footer">
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12">
+          
           {/* Logo */}
-          <div className="md:col-span-2 flex items-start">
-            <span className="font-black text-4xl md:text-5xl tracking-tight leading-none text-white">The<br />SoldOut<br />Studio</span>
+          <div className="flex items-start">
+            <FooterLogo />
           </div>
 
           {/* Site menu */}
           <div>
-            <h4 className="text-sm font-semibold mb-4 text-white">Site menu</h4>
-            <ul className="flex flex-col gap-2">
+            <h4 style={headingStyle}>Site menu</h4>
+            <ul className="flex flex-col gap-3">
               {[
                 { label: "About", href: "#about" },
                 { label: "Services", href: "#services" },
@@ -63,8 +74,9 @@ export default function Footer() {
                 <li key={item.label}>
                   <button
                     onClick={() => scrollTo(item.href)}
-                    className="text-sm transition-colors hover:text-white text-left"
-                    style={{ color: "var(--sol-light-grey)", background: "none", border: "none", cursor: "pointer" }}
+                    style={linkStyle}
+                    onMouseEnter={e => e.currentTarget.style.color = "#EB0000"}
+                    onMouseLeave={e => e.currentTarget.style.color = "#FFFFFF"}
                   >
                     {item.label}
                   </button>
@@ -73,23 +85,53 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Follow us */}
+          <div>
+            <h4 style={headingStyle}>Follow us</h4>
+            <ul className="flex flex-col gap-3">
+               {[
+                { label: "Instagram", href: "https://www.instagram.com/thesoldoutstudio" },
+                { label: "Facebook", href: "#" },
+                { label: "Youtube", href: "#" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={linkStyle}
+                    onMouseEnter={e => e.currentTarget.style.color = "#EB0000"}
+                    onMouseLeave={e => e.currentTarget.style.color = "#FFFFFF"}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold mb-4 text-white">Contact</h4>
-            <address className="not-italic flex flex-col gap-2">
+            <h4 style={headingStyle}>Contact</h4>
+            <address className="not-italic flex flex-col gap-3">
               {["Amrohi Villa, Hathi Mohalla", "Vasai West 401201"].map((line) => (
-                <span key={line} className="text-sm" style={{ color: "var(--sol-light-grey)" }}>{line}</span>
+                <span key={line} style={{ color: "#FFFFFF", fontSize: "14px" }}>{line}</span>
               ))}
             </address>
           </div>
 
           {/* Legal */}
           <div>
-            <h4 className="text-sm font-semibold mb-4 text-white">Legal</h4>
-            <ul className="flex flex-col gap-2">
+            <h4 style={headingStyle}>Legal</h4>
+            <ul className="flex flex-col gap-3">
               {["Privacy Policy", "Accessibility Statement"].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-sm transition-colors hover:text-white" style={{ color: "var(--sol-light-grey)" }}>
+                  <a 
+                    href="#" 
+                    style={linkStyle}
+                    onMouseEnter={e => e.currentTarget.style.color = "#EB0000"}
+                    onMouseLeave={e => e.currentTarget.style.color = "#FFFFFF"}
+                  >
                     {item}
                   </a>
                 </li>
@@ -99,31 +141,10 @@ export default function Footer() {
         </div>
 
         <div
-          className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
-          style={{ borderTop: "1px solid var(--sol-border-dark)", color: "var(--sol-light-grey)" }}
+          className="pt-6"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.15)" }}
         >
-          <span>&copy; 2026 by The SoldOut Studio.</span>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://www.instagram.com/thesoldoutstudio"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 hover:text-white transition-colors"
-              aria-label="Instagram"
-            >
-              <InstagramIcon size={14} />
-              The SoldOut Studio
-            </a>
-            <a
-              href="https://wa.me/919876543210"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition-colors"
-              aria-label="WhatsApp"
-            >
-              WhatsApp
-            </a>
-          </div>
+          <span style={{ color: "#FFFFFF", fontSize: "14px" }}>&copy; 2026 by SoldOut Labs.</span>
         </div>
       </div>
     </footer>
