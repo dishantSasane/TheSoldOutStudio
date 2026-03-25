@@ -137,7 +137,8 @@ function DesktopHero() {
     tl.to(cardRefs.current[0], {
       y: "-150vh",
       ease: "none",
-    }, 0 * 0.2)
+      duration: 0.25,
+    }, 0)
 
     // Cards 1-3: enter with rotateX flip then exit up
     for (let i = 1; i < N; i++) {
@@ -146,12 +147,12 @@ function DesktopHero() {
         rotateX: 0,
         ease: "power2.out",
         duration: 0.25,
-      }, i * 0.2)
+      }, (i - 1) * 0.2)
       tl.to(cardRefs.current[i], {
         y: "-150vh",
         ease: "none",
         duration: 0.25,
-      }, i * 0.2 + 0.25)
+      }, (i - 1) * 0.2 + 0.25)
     }
 
     return () => {
@@ -285,52 +286,6 @@ function DesktopHero() {
               />
             </div>
           ))}
-
-          {/* PROGRESS INDICATORS — z-index 40, above everything */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 40,
-              left: "4vw",
-              zIndex: 40,
-              display: "flex",
-              flexDirection: "column",
-              gap: 14,
-              pointerEvents: "none",
-            }}
-          >
-            {PANELS.map((panel, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{
-                  width: 36, height: 2, borderRadius: 2,
-                  backgroundColor: "rgba(0,0,0,0.12)",
-                  overflow: "hidden", flexShrink: 0,
-                }}>
-                  <div style={{
-                    height: "100%",
-                    borderRadius: 2,
-                    backgroundColor: "#EB0000",
-                    width:
-                      i < activeIndex ? "100%"
-                        : i === activeIndex ? `${segmentFill}%`
-                          : "0%",
-                    transition: i === activeIndex ? "none" : "width 0.3s ease",
-                  }} />
-                </div>
-                <span style={{
-                  fontSize: "0.68rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: i === activeIndex ? "#EB0000" : "#bbb",
-                  transition: "color 0.3s ease",
-                  fontFamily: "'Sora', sans-serif",
-                }}>
-                  {panel.label}
-                </span>
-              </div>
-            ))}
-          </div>
 
           {/* SCROLL HINT */}
           <div
