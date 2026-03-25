@@ -1,22 +1,10 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { motion, useMotionValue, useTransform, useInView, animate } from "framer-motion"
-
-function CountUp({ target, suffix, delay = 0 }: { target: number; suffix: string; delay?: number }) {
-  const count = useMotionValue(0)
-  const display = useTransform(count, (v) => `${Math.round(v)}${suffix}`)
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.2 })
-
-  useEffect(() => {
-    if (inView) {
-      animate(count, target, { duration: 2, delay, ease: "easeOut" })
-    }
-  }, [inView, count, target, delay])
-
-  return <motion.span ref={ref}>{display}</motion.span>
-}
+import { motion } from "framer-motion"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+gsap.registerPlugin(ScrollTrigger)
 
 const stats = [
   { target: 35, suffix: "%", delay: 0.1, label: "ROI growth through strategic OOH ads" },
@@ -25,6 +13,42 @@ const stats = [
 ]
 
 export default function Stats() {
+  const ref35 = useRef<HTMLSpanElement>(null)
+  const ref10 = useRef<HTMLSpanElement>(null)  
+  const ref25 = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const counters = [
+      { ref: ref35.current, target: 35, suffix: "%" },
+      { ref: ref10.current, target: 10, suffix: "M" },
+      { ref: ref25.current, target: 25, suffix: "%" },
+    ]
+    counters.forEach(({ ref, target, suffix }) => {
+      if (!ref) return
+      gsap.fromTo(
+        ref,
+        { textContent: "0" + suffix },
+        {
+          textContent: target + suffix,
+          duration: 2,
+          ease: "power2.out",
+          snap: { textContent: 1 },
+          scrollTrigger: {
+            trigger: ref,
+            start: "top 80%",
+            once: true,
+          },
+          onUpdate: function(this: any) {
+            const val = Math.round(
+              parseFloat(this.targets()[0].textContent)
+            )
+            ref.textContent = val + suffix
+          }
+        }
+      )
+    })
+  }, [])
+
   return (
     <section style={{ backgroundColor: "white", paddingTop: "80px", paddingBottom: "80px", width: "100%" }} aria-label="Your source of growth">
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px", textAlign: "center", width: "100%" }}>
@@ -70,8 +94,11 @@ export default function Stats() {
               transition={{ duration: 0.7, delay: stat.delay, ease: "easeOut" }}
               style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             >
-              <span style={{ display: "block", fontFamily: "'Sora', sans-serif", fontSize: "clamp(5rem, 12vw, 160px)", color: "#EB0000", fontWeight: "bold" }}>
-                <CountUp target={stat.target} suffix={stat.suffix} delay={stat.delay} />
+              <span 
+                ref={i === 0 ? ref35 : i === 1 ? ref10 : ref25}
+                style={{ display: "block", fontFamily: "'Sora', sans-serif", fontSize: "clamp(5rem, 12vw, 160px)", color: "#EB0000", fontWeight: "bold" }}
+              >
+                0{stat.suffix}
               </span>
               <span style={{ display: "block", fontSize: "16px", color: "#333133", textAlign: "center", marginTop: "1rem", fontFamily: "'madefor-text', sans-serif" }}>
                 {stat.label}
