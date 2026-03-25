@@ -1,5 +1,8 @@
 "use client"
-import { useEffect, useRef, useState, useCallback } from "react"
+import { useEffect, useRef, useState } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+gsap.registerPlugin(ScrollTrigger)
 
 const RIGHT_VIDEOS = [
   { src: "/assets/videos/Mumbai_2.0.mp4", label: "Mumbai 2.0" },
@@ -22,7 +25,6 @@ const CARD_WIDTH = "64vw"   // ~64% of viewport width
 const CARD_HEIGHT = "44vh"   // ~68% of viewport height
 const CARD_LEFT = "34vw"   // starts at 34% from left (overlaps H1 right edge)
 const CARD_TOP = "65vh"   // starts 28% from top (vertically centered-ish)
-const CARD_GAP = 80     // 80vh gap between staggered cards
 // Gap between cards = 100vh / N spacing, so white is visible between them
 
 /* ─── MOBILE ─── */
@@ -89,95 +91,74 @@ function MobileHero() {
 /* ─── DESKTOP ─── */
 function DesktopHero() {
   const sectionRef = useRef<HTMLElement>(null)
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([null, null, null, null])
+  const scrollHintRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
-  const [rawProgress, setRawProgress] = useState(0)
-  const rafRef = useRef<number | null>(null)
-
-  const onScroll = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    rafRef.current = requestAnimationFrame(() => {
-      const section = sectionRef.current
-      if (!section) return
-      const rect = section.getBoundingClientRect()
-      const totalScrollable = section.offsetHeight - window.innerHeight
-      if (totalScrollable <= 0) return
-      const scrolled = Math.max(0, -rect.top)
-      const progress = Math.min(scrolled / totalScrollable, 1)
-      setRawProgress(progress)
-      setActiveIndex(Math.min(Math.floor(progress * N), N - 1))
-    })
-  }, [])
-
-  useEffect(() => {
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    }
-  }, [onScroll])
+  const [segmentFill, setSegmentFill] = useState(0)
 
   const scrollToContact = () => {
     const el = document.querySelector("#contact")
     if (el) el.scrollIntoView({ behavior: "smooth" })
   }
 
-  // pos = card's personal scroll position
-  // pos < 0        → parked below viewport
-  // pos 0 → 1      → ENTERING  (card 0: just translateY, cards 1-3: rotateX flip + translateY)
-  // pos 1 → 2      → IN PLACE and starting to EXIT (plain translateY upward)
-  // pos > 2        → gone above viewport
-  //
-  // KEY: gap between cards is NATURAL — each card is CARD_HEIGHT tall (~68vh)
-  // and each card gets 1 full viewport-height of scroll space
-  // So at any moment during transition, white space is visible above/below each card
-  // The H1 text shows through these white gaps — this is the Wix look
-  const getTransform = (index: number): { transform: string; zIndex: number } => {
-    const pos = rawProgress * N - index
+  useEffect(() => {
+    if (!sectionRef.current) return
 
-    // Card 0 — flat on load, exits plain up
-    if (index === 0) {
-      if (pos <= 1) {
-        return { transform: "none", zIndex: N - index }
-      }
-      const exitFraction = Math.min(pos - 1, 1)
-      return {
-        transform: `translateY(${exitFraction * -150}%)`,
-        zIndex: N - index,
-      }
+    // Set initial states
+    gsap.set(cardRefs.current[0], { y: 0, rotateX: 0 })
+    for (let i = 1; i < N; i++) {
+      gsap.set(cardRefs.current[i], {
+        y: "110vh",
+        rotateX: 42,
+        transformPerspective: 1000,
+        transformOrigin: "center bottom",
+      })
     }
 
-    // Cards 1-3
-    if (pos <= 0) {
-      const distance = (1 - pos) * CARD_GAP
-      return {
-        transform: `perspective(1000px) translateY(${distance}vh) rotateX(42deg)`,
-        zIndex: N - index, // lower index = higher z = front of stack
-      }
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress
+          const idx = Math.min(Math.floor(progress * N), N - 1)
+          setActiveIndex(idx)
+          setSegmentFill(Math.max(0, Math.min((progress * N - idx) * 100, 100)))
+          if (scrollHintRef.current) {
+            scrollHintRef.current.style.opacity = progress > 0.03 ? "0" : "1"
+          }
+        },
+      },
+    })
+
+    // Card 0: just moves up, no rotation
+    tl.to(cardRefs.current[0], {
+      y: "-150vh",
+      ease: "none",
+    }, 0 * 0.2)
+
+    // Cards 1-3: enter with rotateX flip then exit up
+    for (let i = 1; i < N; i++) {
+      tl.to(cardRefs.current[i], {
+        y: "0vh",
+        rotateX: 0,
+        ease: "power2.out",
+        duration: 0.25,
+      }, i * 0.2)
+      tl.to(cardRefs.current[i], {
+        y: "-150vh",
+        ease: "none",
+        duration: 0.25,
+      }, i * 0.2 + 0.25)
     }
 
-    if (pos < 1) {
-      const e = 1 - Math.pow(1 - pos, 3)
-      return {
-        transform: `perspective(1000px) translateY(${(1-e)*CARD_GAP}vh) rotateX(${(1-e)*42}deg)`,
-        zIndex: N - index,
-      }
+    return () => {
+      tl.kill()
+      ScrollTrigger.getAll().forEach(t => t.kill())
     }
-
-    if (pos < 2) {
-      const exitFraction = pos - 1
-      return {
-        transform: `translateY(${exitFraction * -150}%)`,
-        zIndex: N - index,
-      }
-    }
-
-    return {
-      transform: "translateY(-155%)",
-      zIndex: N - index,
-    }
-  }
-
-  const segmentFill = Math.max(0, Math.min((rawProgress * N - activeIndex) * 100, 100))
+  }, [])
 
   return (
     <>
@@ -209,7 +190,7 @@ function DesktopHero() {
               position: "absolute",
               top: 0, left: 0,
               width: "100%", height: "100vh",
-              zIndex: 2,
+              zIndex: 1,
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -274,42 +255,36 @@ function DesktopHero() {
             </div>
           </div>
 
-          {/* CARDS — positioned individually, NOT in a shared container
-              This is key — each card is absolutely positioned in the sticky
-              viewport directly, using CARD_LEFT/TOP/WIDTH/HEIGHT
-              z-index is ABOVE text (2), so cards overlay H1
-              White space between cards shows H1 through the gaps */}
-          {PANELS.map((panel, i) => {
-            const { transform, zIndex } = getTransform(i)
-            return (
-              <div
-                key={i}
+          {/* CARDS — absolutely positioned, GSAP handles all transforms
+              Each card starts at the same CARD_TOP position;
+              initial offsets are applied via gsap.set in useEffect */}
+          {PANELS.map((panel, i) => (
+            <div
+              key={i}
+              ref={el => { cardRefs.current[i] = el }}
+              style={{
+                position: "absolute",
+                left: CARD_LEFT,
+                top: CARD_TOP,
+                width: CARD_WIDTH,
+                height: CARD_HEIGHT,
+                zIndex: 10,
+                overflow: "hidden",
+                willChange: "transform",
+              }}
+            >
+              <img
+                src={panel.img}
+                alt={panel.label}
                 style={{
-                  position: "absolute",
-                  left: CARD_LEFT,
-                  top: CARD_TOP,
-                  width: CARD_WIDTH,
-                  height: CARD_HEIGHT,
-                  zIndex: zIndex,
-                  overflow: "hidden",
-                  willChange: "transform",
-                  transformOrigin: "center top",
-                  transform: transform,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
                 }}
-              >
-                <img
-                  src={panel.img}
-                  alt={panel.label}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-              </div>
-            )
-          })}
+              />
+            </div>
+          ))}
 
           {/* PROGRESS INDICATORS — z-index 40, above everything */}
           <div
@@ -359,6 +334,7 @@ function DesktopHero() {
 
           {/* SCROLL HINT */}
           <div
+            ref={scrollHintRef}
             style={{
               position: "absolute",
               bottom: 40,
@@ -368,7 +344,7 @@ function DesktopHero() {
               flexDirection: "column",
               alignItems: "center",
               gap: 8,
-              opacity: rawProgress > 0.03 ? 0 : 1,
+              opacity: 1,
               transition: "opacity 0.6s ease",
               pointerEvents: "none",
             }}
