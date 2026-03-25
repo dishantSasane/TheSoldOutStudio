@@ -1,5 +1,7 @@
 "use client"
 
+import { motion } from "framer-motion"
+
 const mobileRotations = [-12, 6, -5, 9, -10, -6, 10, -7, 8, -9]
 
 const brands = [
@@ -46,24 +48,31 @@ export default function TrustedBy() {
             key={brand.name}
             className="absolute"
             style={{
-              top:       `${desktopPositions[i].top}%`,
-              left:      `${desktopPositions[i].left}%`,
-              transform: `translate(-50%, -50%) rotate(${desktopPositions[i].rotate}deg)`,
+              top:  `${desktopPositions[i].top}%`,
+              left: `${desktopPositions[i].left}%`,
+              transform: `translate(-50%, -50%)`,
             }}
           >
-            <img
-              src={brand.src}
-              alt={brand.name}
-              loading="lazy"
-              style={{
-                height:    brand.deskH,
-                maxWidth:  brand.deskH * 5,
-                width:     "auto",
-                objectFit: "contain",
-                filter:    brand.invert ? "invert(1)" : "none",
-                opacity:   brand.invert ? 0.9 : 1,
-              }}
-            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, rotate: desktopPositions[i].rotate }}
+              whileInView={{ opacity: 1, scale: 1, rotate: desktopPositions[i].rotate }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
+            >
+              <img
+                src={brand.src}
+                alt={brand.name}
+                loading="lazy"
+                style={{
+                  height:    brand.deskH,
+                  maxWidth:  brand.deskH * 5,
+                  width:     "auto",
+                  objectFit: "contain",
+                  filter:    brand.invert ? "invert(1)" : "none",
+                  opacity:   brand.invert ? 0.9 : 1,
+                }}
+              />
+            </motion.div>
           </div>
         ))}
       </div>
@@ -79,38 +88,54 @@ export default function TrustedBy() {
           {/* Row 1: logos 0-2 */}
           <div className="flex justify-around items-center px-3">
             {brands.slice(0, 3).map((brand, i) => (
-              <div key={brand.name} style={{ transform: `rotate(${mobileRotations[i]}deg)`, flexShrink: 0 }}>
-                <img
-                  src={brand.src}
-                  alt={brand.name}
-                  loading="lazy"
-                  style={{
-                    height:    brand.mobH,
-                    maxWidth:  100,
-                    width:     "auto",
-                    objectFit: "contain",
-                    filter:    brand.invert ? "invert(1)" : "none",
-                  }}
-                />
+              <div key={brand.name} style={{ flexShrink: 0 }}>
+                <motion.div
+                  style={{ transform: `rotate(${mobileRotations[i]}deg)` }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
+                >
+                  <img
+                    src={brand.src}
+                    alt={brand.name}
+                    loading="lazy"
+                    style={{
+                      height:    brand.mobH,
+                      maxWidth:  100,
+                      width:     "auto",
+                      objectFit: "contain",
+                      filter:    brand.invert ? "invert(1)" : "none",
+                    }}
+                  />
+                </motion.div>
               </div>
             ))}
           </div>
           {/* Row 2: logos 3-4 */}
           <div className="flex justify-around items-center px-8">
             {brands.slice(3, 5).map((brand, i) => (
-              <div key={brand.name} style={{ transform: `rotate(${mobileRotations[i + 3]}deg)`, flexShrink: 0 }}>
-                <img
-                  src={brand.src}
-                  alt={brand.name}
-                  loading="lazy"
-                  style={{
-                    height:    brand.mobH,
-                    maxWidth:  110,
-                    width:     "auto",
-                    objectFit: "contain",
-                    filter:    brand.invert ? "invert(1)" : "none",
-                  }}
-                />
+              <div key={brand.name} style={{ flexShrink: 0 }}>
+                <motion.div
+                  style={{ transform: `rotate(${mobileRotations[i + 3]}deg)` }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: (i + 3) * 0.1, ease: "easeOut" }}
+                >
+                  <img
+                    src={brand.src}
+                    alt={brand.name}
+                    loading="lazy"
+                    style={{
+                      height:    brand.mobH,
+                      maxWidth:  110,
+                      width:     "auto",
+                      objectFit: "contain",
+                      filter:    brand.invert ? "invert(1)" : "none",
+                    }}
+                  />
+                </motion.div>
               </div>
             ))}
           </div>
@@ -124,38 +149,54 @@ export default function TrustedBy() {
           {/* Row 3: logos 5-7 */}
           <div className="flex justify-around items-center px-3">
             {brands.slice(5, 8).map((brand, i) => (
-              <div key={brand.name} style={{ transform: `rotate(${mobileRotations[i + 5]}deg)`, flexShrink: 0 }}>
-                <img
-                  src={brand.src}
-                  alt={brand.name}
-                  loading="lazy"
-                  style={{
-                    height:    brand.mobH,
-                    maxWidth:  100,
-                    width:     "auto",
-                    objectFit: "contain",
-                    filter:    brand.invert ? "invert(1)" : "none",
-                  }}
-                />
+              <div key={brand.name} style={{ flexShrink: 0 }}>
+                <motion.div
+                  style={{ transform: `rotate(${mobileRotations[i + 5]}deg)` }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: (i + 5) * 0.1, ease: "easeOut" }}
+                >
+                  <img
+                    src={brand.src}
+                    alt={brand.name}
+                    loading="lazy"
+                    style={{
+                      height:    brand.mobH,
+                      maxWidth:  100,
+                      width:     "auto",
+                      objectFit: "contain",
+                      filter:    brand.invert ? "invert(1)" : "none",
+                    }}
+                  />
+                </motion.div>
               </div>
             ))}
           </div>
           {/* Row 4: logos 8-9 */}
           <div className="flex justify-around items-center px-8">
             {brands.slice(8).map((brand, i) => (
-              <div key={brand.name} style={{ transform: `rotate(${mobileRotations[i + 8]}deg)`, flexShrink: 0 }}>
-                <img
-                  src={brand.src}
-                  alt={brand.name}
-                  loading="lazy"
-                  style={{
-                    height:    brand.mobH,
-                    maxWidth:  110,
-                    width:     "auto",
-                    objectFit: "contain",
-                    filter:    brand.invert ? "invert(1)" : "none",
-                  }}
-                />
+              <div key={brand.name} style={{ flexShrink: 0 }}>
+                <motion.div
+                  style={{ transform: `rotate(${mobileRotations[i + 8]}deg)` }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: (i + 8) * 0.1, ease: "easeOut" }}
+                >
+                  <img
+                    src={brand.src}
+                    alt={brand.name}
+                    loading="lazy"
+                    style={{
+                      height:    brand.mobH,
+                      maxWidth:  110,
+                      width:     "auto",
+                      objectFit: "contain",
+                      filter:    brand.invert ? "invert(1)" : "none",
+                    }}
+                  />
+                </motion.div>
               </div>
             ))}
           </div>

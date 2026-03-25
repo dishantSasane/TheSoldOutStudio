@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
 
 const services = [
   {
@@ -30,20 +30,6 @@ const services = [
 ]
 
 export default function Services() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
-      { threshold: 0.1 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
   const scrollToContact = () => {
     const el = document.querySelector("#contact")
     if (el) el.scrollIntoView({ behavior: "smooth" })
@@ -52,7 +38,6 @@ export default function Services() {
   return (
     <section
       id="services"
-      ref={sectionRef}
       className="w-full min-h-screen overflow-hidden block py-8 md:py-12 flex flex-col justify-center"
       style={{ backgroundColor: "#EB0000", minHeight: "100vh" }}
       aria-label="Our services"
@@ -60,8 +45,12 @@ export default function Services() {
       <div className="max-w-5xl mx-auto px-6 w-full">
         {/* Header */}
         <div className="text-center mb-10">
-          <h2
+          <motion.h2
             className="font-black uppercase"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             style={{
               color: "#FFFFFF",
               fontFamily: "'Sora', sans-serif",
@@ -73,24 +62,30 @@ export default function Services() {
             }}
           >
             A FULL SPECTRUM OF SERVICES TO REACH YOUR TARGET AUDIENCE
-          </h2>
-          <p className="mt-4 text-base md:text-lg" style={{ color: "#FFFFFF" }}>
+          </motion.h2>
+          <motion.p
+            className="mt-4 text-base md:text-lg"
+            style={{ color: "#FFFFFF" }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+          >
             From strategy to execution, we bring campaigns that deliver
-          </p>
+          </motion.p>
         </div>
 
         {/* Service list */}
         <div>
           {services.map((svc, i) => (
-            <div
+            <motion.div
               key={svc.num}
               className="service-item flex items-start gap-5 md:gap-6 py-4 px-2 md:px-4"
-              style={{
-                borderTop: "1px solid rgba(255,255,255,0.2)",
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(20px)",
-                transition: `opacity 0.5s ease ${i * 150}ms, transform 0.5s ease ${i * 150}ms`,
-              }}
+              style={{ borderTop: "1px solid rgba(255,255,255,0.2)" }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
             >
               <span
                 className="font-black flex-shrink-0 leading-none"
@@ -103,9 +98,15 @@ export default function Services() {
                 <p className="mt-1 text-sm md:text-base font-semibold italic" style={{ color: "#FFFFFF" }}>{svc.tagline}</p>
                 <p className="mt-2 text-sm md:text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.8)" }}>{svc.desc}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
-          <div style={{ borderTop: "1px solid rgba(255,255,255,0.2)", opacity: visible ? 1 : 0, transition: `opacity 0.5s ease ${services.length * 150}ms` }} />
+          <motion.div
+            style={{ borderTop: "1px solid rgba(255,255,255,0.2)" }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: services.length * 0.1 }}
+          />
         </div>
       </div>
     </section>

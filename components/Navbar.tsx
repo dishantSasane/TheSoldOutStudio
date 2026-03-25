@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
+import { motion } from "framer-motion"
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -19,12 +20,15 @@ export default function Navbar() {
 
   return (
     <>
-      <nav
+      <motion.nav
         className="fixed top-0 w-full z-50"
         style={{
           backgroundColor: "transparent",
           padding: "20px 24px",
         }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="flex items-center justify-end w-full">
           {/* Desktop Menu */}
@@ -79,7 +83,7 @@ export default function Navbar() {
             <Menu size={26} />
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile Menu Overlay */}
       {mobileOpen && (
