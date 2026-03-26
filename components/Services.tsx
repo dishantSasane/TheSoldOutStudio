@@ -47,10 +47,10 @@ export default function Services() {
         <div className="text-center mb-10">
           <motion.h2
             className="font-black uppercase"
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             style={{
               color: "#FFFFFF",
               fontFamily: "'Sora', sans-serif",
@@ -82,10 +82,10 @@ export default function Services() {
               key={svc.num}
               className="service-item flex items-start gap-5 md:gap-6 py-4 px-2 md:px-4"
               style={{ borderTop: "1px solid rgba(255,255,255,0.2)" }}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
             >
               <span
                 className="font-black flex-shrink-0 leading-none"

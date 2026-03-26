@@ -70,10 +70,10 @@ function DesktopAbout() {
         {/* Left: red box / heading */}
         <motion.div
           style={{ flex: "0 0 auto", maxWidth: 540 }}
-          initial={{ opacity: 0, x: -120 }}
+          initial={{ opacity: 0, x: -80 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <h2 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.8rem, 4.8vw, 3.4rem)", lineHeight: 0.98, letterSpacing: "-0.03em" }}>
             THE CREATIVE FORCE
@@ -86,29 +86,47 @@ function DesktopAbout() {
         </motion.div>
 
         {/* Right: text content */}
-        <motion.div
-          className="flex items-stretch gap-8 ml-auto max-w-[460px]"
-          initial={{ opacity: 0, x: 120 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-        >
+        <div className="flex items-stretch gap-8 ml-auto max-w-[460px]">
           <div style={{ width: 2, flexShrink: 0, backgroundColor: "rgba(255,255,255,0.25)" }} />
           <div className="flex flex-col justify-center gap-3">
-            <p style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.9rem", lineHeight: 1.7, fontWeight: 400 }}>
+            <motion.p
+              style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.9rem", lineHeight: 1.7, fontWeight: 400 }}
+              initial={{ opacity: 0, x: 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
               We&apos;re not just another marketing agency — we&apos;re your content and growth partner.
-            </p>
-            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.85rem", lineHeight: 1.7, fontWeight: 400 }}>
+            </motion.p>
+            <motion.p
+              style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.85rem", lineHeight: 1.7, fontWeight: 400 }}
+              initial={{ opacity: 0, x: 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
               At SoldOut, we create high-impact content and manage your entire social presence from end to end. From shooting scroll-stopping visuals to planning, posting, and optimizing your content — everything is built to grow your brand consistently.
-            </p>
-            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.85rem", lineHeight: 1.7, fontWeight: 400 }}>
+            </motion.p>
+            <motion.p
+              style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.85rem", lineHeight: 1.7, fontWeight: 400 }}
+              initial={{ opacity: 0, x: 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
               We&apos;ve worked across industries including businesses, education, industrial projects, podcasts, and international content — adapting strategies that actually work for your audience.
-            </p>
-            <p style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.85rem", lineHeight: 1.7, fontWeight: 600 }}>
+            </motion.p>
+            <motion.p
+              style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.85rem", lineHeight: 1.7, fontWeight: 600 }}
+              initial={{ opacity: 0, x: 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
               If your brand needs attention, consistency, and real growth — we make it happen.
-            </p>
+            </motion.p>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

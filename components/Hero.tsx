@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { motion } from "framer-motion"
 gsap.registerPlugin(ScrollTrigger)
 
 const RIGHT_VIDEOS = [
@@ -41,12 +42,16 @@ function MobileHero() {
         <div className="absolute inset-0"
           style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%)" }} />
         <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-16">
-          <h1 className="font-black uppercase text-white"
-            style={{ fontSize: "clamp(3.2rem, 16vw, 6rem)", lineHeight: 0.92, letterSpacing: "-0.03em" }}>
+          <motion.h1 className="font-black uppercase text-white"
+            style={{ fontSize: "clamp(3.2rem, 16vw, 6rem)", lineHeight: 0.92, letterSpacing: "-0.03em" }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             STEP INTO<br />
             <span style={{ color: "#EB0000" }}>THE SPOT-</span><br />
             LIGHT WITH<br />SOLDOUT!
-          </h1>
+          </motion.h1>
           <p className="mt-5 text-base font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
             No one can miss you now
           </p>
@@ -199,7 +204,7 @@ function DesktopHero() {
               pointerEvents: "none",
             }}
           >
-            <h1
+            <motion.h1
               style={{
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 900,
@@ -213,9 +218,12 @@ function DesktopHero() {
                 width: "58%",
                 letterSpacing: "-0.02em",
               }}
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
               STEP INTO THE SPOTLIGHT WITH SOLDOUT!
-            </h1>
+            </motion.h1>
             <p style={{
               marginTop: 28,
               fontSize: 17,
