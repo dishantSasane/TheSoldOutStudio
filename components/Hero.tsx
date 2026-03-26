@@ -38,8 +38,9 @@ function MobileHero() {
         <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-20">
           <motion.h1 className="font-black uppercase"
             style={{ 
-              fontSize: "clamp(3.8rem, 18vw, 7.5rem)", 
+              fontSize: "clamp(3.5rem, 15vw, 6.5rem)", 
               lineHeight: 0.88, 
+              whiteSpace: "nowrap",
               letterSpacing: "-0.04em",
               color: "#EB0000"
             }}
@@ -240,13 +241,11 @@ function DesktopHero() {
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 900,
                 color: "#EB0000",
-                fontSize: "clamp(3.8rem, 9.5vw, 130px)",
+                fontSize: "clamp(3rem, 8.5vw, 130px)",
                 lineHeight: 0.88,
                 textTransform: "uppercase",
-                hyphens: "none",
-                wordBreak: "keep-all",
+                whiteSpace: "nowrap",
                 margin: 0,
-                width: "50%",
                 letterSpacing: "-0.04em",
               }}
               initial={{ opacity: 0, x: -40 }}
@@ -259,10 +258,10 @@ function DesktopHero() {
             </motion.h1>
             <motion.p style={{
               marginTop: 28,
-              fontSize: "clamp(1rem, 1.8vw, 22px)",
-              color: "#333133",
+              fontSize: "32px",
+              color: "#EB0000",
               fontWeight: 500,
-              fontFamily: "'Sora', sans-serif",
+              fontFamily: "Arial, sans-serif",
             }}
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -280,15 +279,15 @@ function DesktopHero() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  padding: "16px 48px",
+                  padding: "16px 42px",
                   borderRadius: 999,
                   border: "none",
                   color: "#FFFFFF",
                   backgroundColor: "#EB0000",
-                  fontSize: "1.05rem",
+                  fontSize: "16px",
                   fontWeight: 700,
                   cursor: "pointer",
-                  fontFamily: "'Sora', sans-serif",
+                  fontFamily: "Arial, sans-serif",
                   transition: "transform 0.25s, opacity 0.25s",
                 }}
                 onMouseEnter={e => {

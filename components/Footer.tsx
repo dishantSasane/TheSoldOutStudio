@@ -33,7 +33,8 @@ const scrollTo = (id: string) => {
 export default function Footer() {
   const linkStyle = {
     color: "#FFFFFF",
-    fontSize: "14px",
+    fontSize: "16px",
+    fontFamily: "Arial, sans-serif",
     textDecoration: "none",
     transition: "color 0.2s",
     background: "none",
@@ -45,7 +46,8 @@ export default function Footer() {
 
   const headingStyle = {
     color: "#FFFFFF",
-    fontSize: "13px",
+    fontSize: "22px",
+    fontFamily: "Arial, sans-serif",
     textTransform: "uppercase" as const,
     letterSpacing: "0.1em",
     fontWeight: 600,

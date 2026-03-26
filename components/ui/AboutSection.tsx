@@ -35,15 +35,23 @@ function MobileAbout() {
       >
         <h2
           className="font-black uppercase text-white"
-          style={{ fontSize: "clamp(1.6rem, 7vw, 2.6rem)", lineHeight: 1.05, letterSpacing: "-0.02em" }}
+          style={{
+            fontSize: "clamp(1.6rem, 7vw, 2.6rem)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+            backgroundColor: "#EB0000",
+            padding: "16px 24px",
+            display: "inline-block",
+            fontFamily: "Arial, sans-serif"
+          }}
         >
           THE CREATIVE FORCE
           <br />
           BEHIND YOUR
           <br />
-          <span style={{ color: "var(--sol-red)" }}>BRAND&apos;S GROWTH</span>
+          BRAND&apos;S SUCCESS
         </h2>
-        <div style={{ marginTop: 12, height: 3, width: 64, backgroundColor: "var(--sol-red)", borderRadius: 2 }} />
+        <div style={{ marginTop: 12 }} />
         <p className="mt-4 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.85)" }}>
           We&apos;re not just another marketing agency — we&apos;re your content and growth partner. At SoldOut, we create high-impact content and manage your entire social presence from end to end.
         </p>
@@ -75,14 +83,22 @@ function DesktopAbout() {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.8rem, 4.8vw, 3.4rem)", lineHeight: 0.98, letterSpacing: "-0.03em" }}>
+          <h2 className="font-black uppercase text-white" style={{ 
+            fontSize: "clamp(1.8rem, 4.8vw, 3.4rem)", 
+            lineHeight: 0.98, 
+            letterSpacing: "-0.03em",
+            backgroundColor: "#EB0000",
+            padding: "24px 32px",
+            display: "inline-block",
+            fontFamily: "Arial, sans-serif"
+          }}>
             THE CREATIVE FORCE
             <br />
             BEHIND YOUR
             <br />
-            <span style={{ color: "var(--sol-red)" }}>BRAND&apos;S GROWTH</span>
+            BRAND&apos;S SUCCESS
           </h2>
-          <div style={{ marginTop: 16, height: 4, width: 80, backgroundColor: "var(--sol-red)", borderRadius: 2 }} />
+          <div style={{ marginTop: 16 }} />
         </motion.div>
 
         {/* Right: text content */}
