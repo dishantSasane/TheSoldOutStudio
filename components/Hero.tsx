@@ -20,13 +20,11 @@ const PANELS = [
 
 const N = PANELS.length
 
-// Card dimensions — matches Wix reference
-// Cards are NOT full screen — they're partial width/height on right side
-const CARD_WIDTH = "64vw"   // ~64% of viewport width
-const CARD_HEIGHT = "44vh"   // ~68% of viewport height
+// Card dimensions — centered on viewport
+const CARD_WIDTH = "64vw"
+const CARD_HEIGHT = "44vh"
 const CARD_LEFT = "34vw"   // starts at 34% from left (overlaps H1 right edge)
-const CARD_TOP = "65vh"   // starts 28% from top (vertically centered-ish)
-// Gap between cards = 100vh / N spacing, so white is visible between them
+const CARD_TOP = "65vh"    // starts at 65% from top (bottom-right corner)
 
 /* ─── MOBILE ─── */
 function MobileHero() {
@@ -118,14 +116,13 @@ function DesktopHero() {
   useEffect(() => {
     if (!sectionRef.current) return
 
-    // Set initial states
-    gsap.set(cardRefs.current[0], { y: 0, rotateX: 0 })
+    // Set initial states — card 0 at bottom-right anchor, others off-screen below
+    gsap.set(cardRefs.current[0], { x: 0, y: 0, rotation: 0 })
     for (let i = 1; i < N; i++) {
       gsap.set(cardRefs.current[i], {
-        y: "110vh",
-        rotateX: 42,
-        transformPerspective: 1000,
-        transformOrigin: "center bottom",
+        x: "-8vw",
+        y: "60vh",    // CSS top:65vh + 60vh = 125vh → off screen below
+        rotation: -20,
       })
     }
 
@@ -147,26 +144,51 @@ function DesktopHero() {
       },
     })
 
-    // Card 0: just moves up, no rotation
-    tl.to(cardRefs.current[0], {
-      y: "-150vh",
-      ease: "none",
-      duration: 0.25,
-    }, 0)
+    // CY = center y offset: CARD_TOP(65vh) + CY = 28vh (vertical center) → CY = -37vh
+    const CY        = "-37vh"
+    const settleDur = 0.12   // card 0 rises from bottom-right to center
+    const exitDur   = 0.12   // card arcs out upper-right
+    const enterDur  = 0.12   // card arcs in from lower-left to center
+    const gap       = 0.01   // tiny pause between phases
 
-    // Cards 1-3: enter with rotateX flip then exit up
+    // Card 0: visible at bottom-right on load → rises to center → exits upper-right
+    tl.to(cardRefs.current[0], {
+      y: CY,
+      ease: "power2.out",
+      duration: settleDur,
+    }, 0)
+    tl.to(cardRefs.current[0], {
+      x: "8vw",
+      y: "-80vh",
+      rotation: 20,
+      ease: "power2.inOut",
+      duration: exitDur,
+    }, settleDur + gap)
+
+    // Cards 1–3: arc in from below to center, then arc out upper-right
+    let nextEnterTime = settleDur + gap + exitDur
     for (let i = 1; i < N; i++) {
+      const enterStart = nextEnterTime
+      const exitStart  = enterStart + enterDur + gap
+
       tl.to(cardRefs.current[i], {
-        y: "0vh",
-        rotateX: 0,
+        x: 0,
+        y: CY,
+        rotation: 0,
         ease: "power2.out",
-        duration: 0.25,
-      }, (i - 1) * 0.2)
-      tl.to(cardRefs.current[i], {
-        y: "-150vh",
-        ease: "none",
-        duration: 0.25,
-      }, (i - 1) * 0.2 + 0.25)
+        duration: enterDur,
+      }, enterStart)
+
+      if (i < N - 1) {
+        tl.to(cardRefs.current[i], {
+          x: "8vw",
+          y: "-80vh",
+          rotation: 20,
+          ease: "power2.in",
+          duration: exitDur,
+        }, exitStart)
+        nextEnterTime = exitStart + exitDur
+      }
     }
 
     return () => {
@@ -218,13 +240,13 @@ function DesktopHero() {
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 900,
                 color: "#EB0000",
-                fontSize: "clamp(4rem, 12.5vw, 155px)",
-                lineHeight: 0.86,
+                fontSize: "clamp(3.8rem, 9.5vw, 130px)",
+                lineHeight: 0.88,
                 textTransform: "uppercase",
                 hyphens: "none",
                 wordBreak: "keep-all",
                 margin: 0,
-                width: "85%",
+                width: "50%",
                 letterSpacing: "-0.04em",
               }}
               initial={{ opacity: 0, x: -40 }}
@@ -237,9 +259,9 @@ function DesktopHero() {
             </motion.h1>
             <motion.p style={{
               marginTop: 28,
-              fontSize: 22,
-              color: "#EB0000",
-              fontWeight: 700,
+              fontSize: "clamp(1rem, 1.8vw, 22px)",
+              color: "#333133",
+              fontWeight: 500,
               fontFamily: "'Sora', sans-serif",
             }}
               initial={{ opacity: 0, x: -30 }}

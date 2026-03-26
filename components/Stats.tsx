@@ -83,24 +83,39 @@ export default function Stats() {
           Empowering brands with targeted digital and outdoor advertising
         </motion.p>
 
-        {/* 3-column stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem", marginTop: "4rem" }}>
+        {/* Responsive stats grid — 3-col desktop, stacked mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: "2rem", marginTop: "4rem" }}>
           {stats.map((stat, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.7, delay: stat.delay, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.75, delay: stat.delay, ease: "easeOut" }}
               style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             >
-              <span 
+              <span
                 ref={i === 0 ? ref35 : i === 1 ? ref10 : ref25}
-                style={{ display: "block", fontFamily: "'Sora', sans-serif", fontSize: "clamp(5rem, 12vw, 160px)", color: "#EB0000", fontWeight: "bold" }}
+                style={{
+                  display: "block",
+                  fontFamily: "'Sora', sans-serif",
+                  fontSize: "clamp(5rem, 14vw, 160px)",
+                  color: "#EB0000",
+                  fontWeight: 900,
+                  lineHeight: 1,
+                }}
               >
                 0{stat.suffix}
               </span>
-              <span style={{ display: "block", fontSize: "16px", color: "#333133", textAlign: "center", marginTop: "1rem", fontFamily: "'madefor-text', sans-serif" }}>
+              <span style={{
+                display: "block",
+                fontSize: "clamp(0.85rem, 1.6vw, 1rem)",
+                color: "#555",
+                textAlign: "center",
+                marginTop: "1rem",
+                maxWidth: 240,
+                lineHeight: 1.5,
+              }}>
                 {stat.label}
               </span>
             </motion.div>
