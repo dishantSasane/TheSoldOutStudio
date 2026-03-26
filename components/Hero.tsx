@@ -36,32 +36,41 @@ function MobileHero() {
   }
   return (
     <>
-      <section className="relative w-full overflow-hidden" style={{ height: "100svh", minHeight: 560 }}>
-        <video src={RIGHT_VIDEOS[0].src} autoPlay loop muted playsInline preload="metadata"
-          className="absolute inset-0 w-full h-full object-cover" style={{ filter: "brightness(0.45)" }} />
-        <div className="absolute inset-0"
-          style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%)" }} />
-        <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-16">
-          <motion.h1 className="font-black uppercase text-white"
-            style={{ fontSize: "clamp(3.2rem, 16vw, 6rem)", lineHeight: 0.92, letterSpacing: "-0.03em" }}
+      <section className="relative w-full overflow-hidden" style={{ height: "100svh", minHeight: 560, backgroundColor: "#FFFFFF" }}>
+        <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-20">
+          <motion.h1 className="font-black uppercase"
+            style={{ 
+              fontSize: "clamp(3.8rem, 18vw, 7.5rem)", 
+              lineHeight: 0.88, 
+              letterSpacing: "-0.04em",
+              color: "#EB0000"
+            }}
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            STEP INTO<br />
-            <span style={{ color: "#EB0000" }}>THE SPOT-</span><br />
-            LIGHT WITH<br />SOLDOUT!
+            STEP INTO THE<br />
+            SPOTLIGHT WITH<br />
+            SOLDOUT!
           </motion.h1>
-          <p className="mt-5 text-base font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
+          <motion.p className="mt-6 text-lg font-bold" style={{ color: "#EB0000" }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          >
             No one can miss you now
-          </p>
-          <div className="mt-6">
+          </motion.p>
+          <motion.div className="mt-8"
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+          >
             <button onClick={scrollToContact}
-              className="inline-flex items-center px-7 py-3.5 rounded-full font-bold text-white text-sm"
+              className="inline-flex items-center px-10 py-4 rounded-full font-bold text-white text-base"
               style={{ backgroundColor: "#EB0000" }}>
               Get a Quote
             </button>
-          </div>
+          </motion.div>
         </div>
       </section>
       <section className="w-full py-14" style={{ backgroundColor: "#0a0a0a" }}>
@@ -209,91 +218,119 @@ function DesktopHero() {
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 900,
                 color: "#EB0000",
-                fontSize: "clamp(3.8rem, 9.5vw, 130px)",
-                lineHeight: 0.91,
+                fontSize: "clamp(4rem, 12.5vw, 155px)",
+                lineHeight: 0.86,
                 textTransform: "uppercase",
                 hyphens: "none",
                 wordBreak: "keep-all",
                 margin: 0,
-                width: "58%",
-                letterSpacing: "-0.02em",
+                width: "85%",
+                letterSpacing: "-0.04em",
               }}
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              STEP INTO THE SPOTLIGHT WITH SOLDOUT!
+              STEP INTO THE<br />
+              SPOTLIGHT WITH<br />
+              SOLDOUT!
             </motion.h1>
-            <p style={{
+            <motion.p style={{
               marginTop: 28,
-              fontSize: 17,
-              color: "#333133",
-              fontWeight: 400,
+              fontSize: 22,
+              color: "#EB0000",
+              fontWeight: 700,
               fontFamily: "'Sora', sans-serif",
-            }}>
+            }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            >
               No one can miss you now
-            </p>
-            <div style={{ marginTop: 32, pointerEvents: "auto" }}>
+            </motion.p>
+            <motion.div style={{ marginTop: 40, pointerEvents: "auto" }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            >
               <button
                 onClick={scrollToContact}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  padding: "13px 34px",
+                  padding: "16px 48px",
                   borderRadius: 999,
-                  border: "2px solid #EB0000",
-                  color: "#EB0000",
-                  backgroundColor: "transparent",
-                  fontSize: "0.95rem",
-                  fontWeight: 600,
+                  border: "none",
+                  color: "#FFFFFF",
+                  backgroundColor: "#EB0000",
+                  fontSize: "1.05rem",
+                  fontWeight: 700,
                   cursor: "pointer",
                   fontFamily: "'Sora', sans-serif",
-                  transition: "background-color 0.25s, color 0.25s",
+                  transition: "transform 0.25s, opacity 0.25s",
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.backgroundColor = "#EB0000"
-                  e.currentTarget.style.color = "#fff"
+                  e.currentTarget.style.transform = "scale(1.05)"
+                  e.currentTarget.style.opacity = "0.9"
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.backgroundColor = "transparent"
-                  e.currentTarget.style.color = "#EB0000"
+                  e.currentTarget.style.transform = "scale(1)"
+                  e.currentTarget.style.opacity = "1"
                 }}
               >
                 Get a Quote
               </button>
-            </div>
+            </motion.div>
           </div>
 
           {/* CARDS — absolutely positioned, GSAP handles all transforms
               Each card starts at the same CARD_TOP position;
               initial offsets are applied via gsap.set in useEffect */}
-          {PANELS.map((panel, i) => (
-            <div
-              key={i}
-              ref={el => { cardRefs.current[i] = el }}
-              style={{
-                position: "absolute",
-                left: CARD_LEFT,
-                top: CARD_TOP,
-                width: CARD_WIDTH,
-                height: CARD_HEIGHT,
-                zIndex: 10,
-                overflow: "hidden",
-                willChange: "transform",
-              }}
-            >
-              <img
-                src={panel.img}
-                alt={panel.label}
+          {PANELS.map((panel, i) => {
+            const card = (
+              <div
+                key={i}
+                ref={el => { cardRefs.current[i] = el }}
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
+                  position: "absolute",
+                  left: CARD_LEFT,
+                  top: CARD_TOP,
+                  width: CARD_WIDTH,
+                  height: CARD_HEIGHT,
+                  zIndex: 10,
+                  overflow: "hidden",
+                  willChange: "transform",
                 }}
-              />
-            </div>
-          ))}
+              >
+                <img
+                  src={panel.img}
+                  alt={panel.label}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+              </div>
+            )
+
+            if (i === 0) {
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%" }}
+                >
+                  {card}
+                </motion.div>
+              )
+            }
+
+            return card
+          })}
 
           {/* SCROLL HINT */}
           <div

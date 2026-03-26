@@ -49,12 +49,12 @@ export default function Navbar() {
                   onClick={() => scrollTo(link.href)}
                   style={{
                     color: "#EB0000",
-                    fontSize: "16px",
-                    fontWeight: "bold",
+                    fontSize: "18px",
+                    fontWeight: "800",
                     textDecoration: "none",
                     transition: "transform 0.2s",
                   }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
+                  onMouseEnter={e => e.currentTarget.style.transform = "scale(1.15)"}
                   onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
                 >
                   {link.label}
@@ -71,11 +71,11 @@ export default function Navbar() {
                 onClick={() => scrollTo("#contact")}
                 style={{
                   color: "#EB0000",
-                  fontWeight: "bold",
-                  border: "2px solid #EB0000",
+                  fontWeight: "900",
+                  border: "2.5px solid #EB0000",
                   borderRadius: "9999px",
-                  padding: "8px 24px",
-                  fontSize: "16px",
+                  padding: "10px 32px",
+                  fontSize: "18px",
                   backgroundColor: "transparent",
                   transition: "all 0.2s, transform 0.2s",
                 }}
