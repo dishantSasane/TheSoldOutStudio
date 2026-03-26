@@ -159,7 +159,7 @@ function DesktopHero() {
     }, 0)
     tl.to(cardRefs.current[0], {
       x: "8vw",
-      y: "-80vh",
+      y: "-150vh",
       rotation: 20,
       ease: "power2.inOut",
       duration: exitDur,
@@ -182,7 +182,7 @@ function DesktopHero() {
       if (i < N - 1) {
         tl.to(cardRefs.current[i], {
           x: "8vw",
-          y: "-80vh",
+          y: "-150vh",
           rotation: 20,
           ease: "power2.in",
           duration: exitDur,
@@ -205,7 +205,7 @@ function DesktopHero() {
         style={{
           position: "relative",
           width: "100%",
-          height: "900vh",
+          height: "1500vh",
           backgroundColor: "#ffffff",
         }}
       >
