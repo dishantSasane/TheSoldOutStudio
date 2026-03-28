@@ -2,14 +2,12 @@
 
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const { scrollY } = useScroll()
-  const backgroundColor = useTransform(scrollY, [0, 80], ["rgba(255,255,255,0)", "rgba(255,255,255,0.95)"])
-  const backdropFilter = useTransform(scrollY, [0, 80], ["blur(0px)", "blur(14px)"])
+
 
   const navLinks = [
     { label: "About", href: "#about" },
@@ -26,7 +24,7 @@ export default function Navbar() {
     <>
       <motion.nav
         className="fixed top-0 w-full z-50"
-        style={{ padding: "16px 28px", backgroundColor, backdropFilter }}
+        style={{ padding: "16px 28px", backgroundColor: "transparent" }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -43,19 +41,27 @@ export default function Navbar() {
           >
             {/* Snowflake / asterisk icon matching Wix logo mark */}
             <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="20" y1="4" x2="20" y2="36" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
-              <line x1="4" y1="20" x2="36" y2="20" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
-              <line x1="8.34" y1="8.34" x2="31.66" y2="31.66" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
-              <line x1="31.66" y1="8.34" x2="8.34" y2="31.66" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M6 6 L14 14 M6 14 L6 6 L14 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
+              <path d="M34 34 L26 26 M34 26 L34 34 L26 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
+              <path d="M34 6 L26 14 M34 14 L34 6 L26 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
+              <path d="M6 34 L14 26 M6 26 L6 34 L14 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
+              <line x1="10" y1="30" x2="30" y2="10" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
             </svg>
-            <div style={{ lineHeight: 1.05 }}>
-              <div style={{ fontWeight: 900, fontSize: 14, color: "#000", letterSpacing: "-0.01em" }}>SoldOut</div>
-              <div style={{ fontWeight: 900, fontSize: 14, color: "#000", letterSpacing: "-0.01em" }}>Labs</div>
+            <div style={{ lineHeight: 1.05, fontFamily: "Arial, sans-serif" }}>
+              <div style={{ fontWeight: 800, fontSize: 21, color: "#000", letterSpacing: "-0.01em" }}>SoldOut</div>
+              <div style={{ fontWeight: 800, fontSize: 21, color: "#000", letterSpacing: "-0.01em" }}>Labs</div>
             </div>
           </motion.button>
 
           {/* Right side */}
-          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+          <div style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            gap: 24,
+            backgroundColor: "#FFFFFF",
+            padding: "8px 24px",
+            borderRadius: "9999px" 
+          }}>
             {/* Desktop nav links — hidden on mobile/tablet */}
             <div className="hidden lg:flex items-center" style={{ gap: 32 }}>
               {navLinks.map((link, index) => (
@@ -69,8 +75,9 @@ export default function Navbar() {
                     onClick={() => scrollTo(link.href)}
                     style={{
                       color: "#EB0000",
-                      fontSize: "17px",
-                      fontWeight: "800",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      fontFamily: "Arial, sans-serif",
                       background: "none",
                       border: "none",
                       cursor: "pointer",
@@ -96,11 +103,12 @@ export default function Navbar() {
                 onClick={() => scrollTo("#contact")}
                 style={{
                   color: "#EB0000",
-                  fontWeight: "900",
-                  border: "2.5px solid #EB0000",
+                  fontWeight: "500",
+                  border: "1px solid #EB0000",
                   borderRadius: "9999px",
-                  padding: "9px 28px",
-                  fontSize: "16px",
+                  padding: "7px 22px",
+                  fontSize: "14px",
+                  fontFamily: "Arial, sans-serif",
                   backgroundColor: "transparent",
                   cursor: "pointer",
                   transition: "all 0.2s",
@@ -147,14 +155,15 @@ export default function Navbar() {
             {/* Logo in overlay */}
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="20" y1="4" x2="20" y2="36" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
-                <line x1="4" y1="20" x2="36" y2="20" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
-                <line x1="8.34" y1="8.34" x2="31.66" y2="31.66" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
-                <line x1="31.66" y1="8.34" x2="8.34" y2="31.66" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M6 6 L14 14 M6 14 L6 6 L14 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
+              <path d="M34 34 L26 26 M34 26 L34 34 L26 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
+              <path d="M34 6 L26 14 M34 14 L34 6 L26 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
+              <path d="M6 34 L14 26 M6 26 L6 34 L14 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
+              <line x1="10" y1="30" x2="30" y2="10" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
               </svg>
-              <div style={{ lineHeight: 1.05 }}>
-                <div style={{ fontWeight: 900, fontSize: 13, color: "#000" }}>SoldOut</div>
-                <div style={{ fontWeight: 900, fontSize: 13, color: "#000" }}>Labs</div>
+              <div style={{ lineHeight: 1.05, fontFamily: "Arial, sans-serif" }}>
+                <div style={{ fontWeight: 800, fontSize: 21, color: "#000" }}>SoldOut</div>
+                <div style={{ fontWeight: 800, fontSize: 21, color: "#000" }}>Labs</div>
               </div>
             </div>
             <button

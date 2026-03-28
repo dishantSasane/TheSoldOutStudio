@@ -178,6 +178,7 @@ export default function TrustedBy() {
                 color: "var(--sol-black)",
                 letterSpacing: "-0.04em",
                 paddingRight: "4vw",
+                fontFamily: "'Sora', sans-serif"
               }}
             >
               {"TRUSTED BY\u00A0\u00A0\u00A0"}

@@ -38,7 +38,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      style={{ backgroundColor: "#EB0000", width: "100%", padding: "80px 0" }}
+      style={{ backgroundColor: "#EB0000", width: "100%", padding: "80px 0", fontFamily: "Arial, sans-serif" }}
       aria-label="Our services"
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 80px)" }}>

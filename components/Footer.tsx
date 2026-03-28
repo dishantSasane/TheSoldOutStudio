@@ -33,7 +33,8 @@ const scrollTo = (id: string) => {
 export default function Footer() {
   const linkStyle = {
     color: "#FFFFFF",
-    fontSize: "14px",
+    fontSize: "16px",
+    fontFamily: "Arial, sans-serif",
     textDecoration: "none",
     transition: "color 0.2s",
     background: "none",
@@ -45,7 +46,8 @@ export default function Footer() {
 
   const headingStyle = {
     color: "#FFFFFF",
-    fontSize: "13px",
+    fontSize: "22px",
+    fontFamily: "Arial, sans-serif",
     textTransform: "uppercase" as const,
     letterSpacing: "0.1em",
     fontWeight: 600,
@@ -54,8 +56,8 @@ export default function Footer() {
 
   return (
     <footer className="w-full" style={{ backgroundColor: "#000000", paddingTop: "64px", paddingBottom: "40px" }} aria-label="Site footer">
-      <div className="max-w-6xl mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12">
+      <div className="w-full px-8 md:px-16 lg:px-24">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12 pb-12 w-full">
           
           {/* Logo */}
           <div className="flex items-start">
