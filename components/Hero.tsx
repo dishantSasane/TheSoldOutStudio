@@ -118,12 +118,15 @@ function DesktopHero() {
     if (!sectionRef.current) return
 
     // Set initial states — card 0 at bottom-right anchor, others off-screen below
-    gsap.set(cardRefs.current[0], { x: 0, y: 0, rotation: 0 })
+    gsap.set(cardRefs.current[0], { x: 0, y: 0, z: -200, scale: 0.85, rotation: 0, opacity: 0.6 })
     for (let i = 1; i < N; i++) {
       gsap.set(cardRefs.current[i], {
         x: "-8vw",
         y: "60vh",    // CSS top:65vh + 60vh = 125vh → off screen below
+        z: -200,
+        scale: 0.85,
         rotation: -20,
+        opacity: 0.6
       })
     }
 
@@ -145,24 +148,37 @@ function DesktopHero() {
       },
     })
 
-    // CY = center y offset: CARD_TOP(65vh) + CY = 28vh (vertical center) → CY = -37vh
-    const CY        = "-37vh"
-    const settleDur = 0.12   // card 0 rises from bottom-right to center
-    const exitDur   = 0.12   // card arcs out upper-right
-    const enterDur  = 0.12   // card arcs in from lower-left to center
-    const gap       = 0.01   // tiny pause between phases
+    // CY = center y offset: CARD_TOP(65vh) + CY = 38vh (below navbar) → CY = -27vh
+    const CY        = "-27vh"
+    const settleDur = 0.20   // card 0 rises from bottom-right to center
+    const exitDur   = 0.18   // card arcs out upper-right
+    const enterDur  = 0.20   // card arcs in from lower-left to center
+    const gap       = 0.05   // tiny pause between phases
 
     // Card 0: visible at bottom-right on load → rises to center → exits upper-right
     tl.to(cardRefs.current[0], {
       y: CY,
-      ease: "power2.out",
+      z: 0,
+      scale: 1,
+      opacity: 1,
+      ease: "power3.out",
       duration: settleDur,
     }, 0)
     tl.to(cardRefs.current[0], {
-      x: "8vw",
-      y: "-150vh",
-      rotation: 20,
-      ease: "power2.inOut",
+      filter: "blur(6px)",
+      duration: 0.1,
+    }, 0)
+    tl.to(cardRefs.current[0], {
+      filter: "blur(0px)",
+      duration: 0.1,
+    }, 0.1)
+    tl.to(cardRefs.current[0], {
+      x: "70vw",
+      y: "-200vh",
+      rotation: 30,
+      scale: 0.85,
+      opacity: 0,
+      ease: "power3.inOut",
       duration: exitDur,
     }, settleDur + gap)
 
@@ -175,17 +191,32 @@ function DesktopHero() {
       tl.to(cardRefs.current[i], {
         x: 0,
         y: CY,
+        z: 0,
+        scale: 1,
         rotation: 0,
-        ease: "power2.out",
+        opacity: 1,
+        ease: "power3.out",
         duration: enterDur,
       }, enterStart)
 
+      tl.to(cardRefs.current[i], {
+        filter: "blur(6px)",
+        duration: 0.1,
+      }, enterStart)
+
+      tl.to(cardRefs.current[i], {
+        filter: "blur(0px)",
+        duration: 0.1,
+      }, enterStart + 0.1)
+
       if (i < N - 1) {
         tl.to(cardRefs.current[i], {
-          x: "8vw",
-          y: "-150vh",
-          rotation: 20,
-          ease: "power2.in",
+          x: "70vw",
+          y: "-200vh",
+          rotation: 30,
+          scale: 0.85,
+          opacity: 0,
+          ease: "power3.inOut",
           duration: exitDur,
         }, exitStart)
         nextEnterTime = exitStart + exitDur
@@ -219,6 +250,8 @@ function DesktopHero() {
             height: "100vh",
             backgroundColor: "#ffffff",
             overflow: "hidden",
+            perspective: "1000px",
+            transformStyle: "preserve-3d",
           }}
         >
 
