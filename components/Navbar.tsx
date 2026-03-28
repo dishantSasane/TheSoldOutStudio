@@ -41,11 +41,11 @@ export default function Navbar() {
           >
             {/* Snowflake / asterisk icon matching Wix logo mark */}
             <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 6 L14 14 M6 14 L6 6 L14 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M34 34 L26 26 M34 26 L34 34 L26 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M34 6 L26 14 M34 14 L34 6 L26 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M6 34 L14 26 M6 26 L6 34 L14 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <line x1="10" y1="30" x2="30" y2="10" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M6 6 L14 14 M6 14 L6 6 L14 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none" />
+              <path d="M34 34 L26 26 M34 26 L34 34 L26 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none" />
+              <path d="M34 6 L26 14 M34 14 L34 6 L26 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none" />
+              <path d="M6 34 L14 26 M6 26 L6 34 L14 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none" />
+              <line x1="10" y1="30" x2="30" y2="10" stroke="#EB0000" strokeWidth="4" strokeLinecap="round" />
             </svg>
             <div style={{ lineHeight: 1.05, fontFamily: "Arial, sans-serif" }}>
               <div style={{ fontWeight: 800, fontSize: 21, color: "#000", letterSpacing: "-0.01em" }}>SoldOut</div>
@@ -54,13 +54,13 @@ export default function Navbar() {
           </motion.button>
 
           {/* Right side */}
-          <div style={{ 
-            display: "flex", 
-            alignItems: "center", 
+          <div style={{
+            display: "flex",
+            alignItems: "center",
             gap: 24,
             backgroundColor: "#FFFFFF",
             padding: "8px 24px",
-            borderRadius: "9999px" 
+            borderRadius: "9999px"
           }}>
             {/* Desktop nav links — hidden on mobile/tablet */}
             <div className="hidden lg:flex items-center" style={{ gap: 32 }}>
@@ -155,11 +155,11 @@ export default function Navbar() {
             {/* Logo in overlay */}
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 6 L14 14 M6 14 L6 6 L14 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M34 34 L26 26 M34 26 L34 34 L26 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M34 6 L26 14 M34 14 L34 6 L26 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M6 34 L14 26 M6 26 L6 34 L14 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <line x1="10" y1="30" x2="30" y2="10" stroke="#EB0000" strokeWidth="4" strokeLinecap="round"/>
+                <path d="M6 6 L14 14 M6 14 L6 6 L14 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none" />
+                <path d="M34 34 L26 26 M34 26 L34 34 L26 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none" />
+                <path d="M34 6 L26 14 M34 14 L34 6 L26 6" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none" />
+                <path d="M6 34 L14 26 M6 26 L6 34 L14 34" stroke="#000" strokeWidth="3" strokeLinejoin="miter" fill="none" />
+                <line x1="10" y1="30" x2="30" y2="10" stroke="#EB0000" strokeWidth="4" strokeLinecap="round" />
               </svg>
               <div style={{ lineHeight: 1.05, fontFamily: "Arial, sans-serif" }}>
                 <div style={{ fontWeight: 800, fontSize: 21, color: "#000" }}>SoldOut</div>
