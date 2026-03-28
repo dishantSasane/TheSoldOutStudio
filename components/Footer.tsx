@@ -56,8 +56,8 @@ export default function Footer() {
 
   return (
     <footer className="w-full" style={{ backgroundColor: "#000000", paddingTop: "64px", paddingBottom: "40px" }} aria-label="Site footer">
-      <div className="max-w-6xl mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12">
+      <div className="w-full px-8 md:px-16 lg:px-24">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12 pb-12 w-full">
           
           {/* Logo */}
           <div className="flex items-start">

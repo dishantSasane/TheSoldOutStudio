@@ -2,14 +2,12 @@
 
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const { scrollY } = useScroll()
-  const backgroundColor = useTransform(scrollY, [0, 80], ["rgba(255,255,255,0)", "rgba(255,255,255,0.95)"])
-  const backdropFilter = useTransform(scrollY, [0, 80], ["blur(0px)", "blur(14px)"])
+
 
   const navLinks = [
     { label: "About", href: "#about" },
@@ -26,7 +24,7 @@ export default function Navbar() {
     <>
       <motion.nav
         className="fixed top-0 w-full z-50"
-        style={{ padding: "16px 28px", backgroundColor, backdropFilter }}
+        style={{ padding: "16px 28px", backgroundColor: "transparent" }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -56,7 +54,14 @@ export default function Navbar() {
           </motion.button>
 
           {/* Right side */}
-          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+          <div style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            gap: 24,
+            backgroundColor: "#FFFFFF",
+            padding: "8px 24px",
+            borderRadius: "9999px" 
+          }}>
             {/* Desktop nav links — hidden on mobile/tablet */}
             <div className="hidden lg:flex items-center" style={{ gap: 32 }}>
               {navLinks.map((link, index) => (
