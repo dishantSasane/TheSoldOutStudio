@@ -37,9 +37,9 @@ function MobileHero() {
       <section className="relative w-full overflow-hidden" style={{ height: "100svh", minHeight: 560, backgroundColor: "#FFFFFF" }}>
         <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-20">
           <motion.h1 className="font-black uppercase"
-            style={{ 
-              fontSize: "clamp(3.5rem, 15vw, 6.5rem)", 
-              lineHeight: 0.88, 
+            style={{
+              fontSize: "clamp(3.5rem, 15vw, 6.5rem)",
+              lineHeight: 0.88,
               whiteSpace: "nowrap",
               letterSpacing: "-0.04em",
               color: "#EB0000"
@@ -106,6 +106,7 @@ function DesktopHero() {
   const sectionRef = useRef<HTMLElement>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([null, null, null, null])
   const scrollHintRef = useRef<HTMLDivElement>(null)
+  const headingRef = useRef<HTMLHeadingElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [segmentFill, setSegmentFill] = useState(0)
 
@@ -116,6 +117,40 @@ function DesktopHero() {
 
   useEffect(() => {
     if (!sectionRef.current) return
+
+    // H1 — initial state: tilted in 3D, blurred
+    gsap.set(headingRef.current, {
+      opacity: 0,
+      y: 40,
+      rotationX: 40,
+      rotationY: -15,
+      transformPerspective: 1000,
+      transformOrigin: "left center",
+      scale: 0.95,
+      filter: "blur(8px)",
+    })
+
+    // H1 premium twist-in with overshoot
+    const textTl = gsap.timeline()
+    textTl
+      .to(headingRef.current, {
+        opacity: 1,
+        y: 0,
+        rotationX: -5,
+        rotationY: 5,
+        scale: 1.02,
+        filter: "blur(2px)",
+        duration: 0.8,
+        ease: "power3.out",
+      })
+      .to(headingRef.current, {
+        rotationX: 0,
+        rotationY: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 0.4,
+        ease: "power2.inOut",
+      })
 
     // Set initial states — card 0 at bottom-right anchor, others off-screen below
     gsap.set(cardRefs.current[0], { x: 0, y: 0, z: -200, scale: 0.85, rotation: 0, opacity: 0.6 })
@@ -149,11 +184,11 @@ function DesktopHero() {
     })
 
     // CY = center y offset: CARD_TOP(65vh) + CY = 38vh (below navbar) → CY = -27vh
-    const CY        = "-27vh"
+    const CY = "-27vh"
     const settleDur = 0.20   // card 0 rises from bottom-right to center
-    const exitDur   = 0.18   // card arcs out upper-right
-    const enterDur  = 0.20   // card arcs in from lower-left to center
-    const gap       = 0.05   // tiny pause between phases
+    const exitDur = 0.18   // card arcs out upper-right
+    const enterDur = 0.20   // card arcs in from lower-left to center
+    const gap = 0.05   // tiny pause between phases
 
     // Card 0: visible at bottom-right on load → rises to center → exits upper-right
     tl.to(cardRefs.current[0], {
@@ -177,7 +212,6 @@ function DesktopHero() {
       y: "-200vh",
       rotation: 30,
       scale: 0.85,
-      opacity: 0,
       ease: "power3.inOut",
       duration: exitDur,
     }, settleDur + gap)
@@ -186,7 +220,7 @@ function DesktopHero() {
     let nextEnterTime = settleDur + gap + exitDur
     for (let i = 1; i < N; i++) {
       const enterStart = nextEnterTime
-      const exitStart  = enterStart + enterDur + gap
+      const exitStart = enterStart + enterDur + gap
 
       tl.to(cardRefs.current[i], {
         x: 0,
@@ -215,7 +249,6 @@ function DesktopHero() {
           y: "-200vh",
           rotation: 30,
           scale: 0.85,
-          opacity: 0,
           ease: "power3.inOut",
           duration: exitDur,
         }, exitStart)
@@ -223,9 +256,27 @@ function DesktopHero() {
       }
     }
 
+    // Replay H1 twist-in whenever page reaches scroll top (logo click or back-scroll)
+    const onScroll = () => {
+      if (window.scrollY === 0) {
+        gsap.set(headingRef.current, {
+          opacity: 0,
+          y: 40,
+          rotationX: 40,
+          rotationY: -15,
+          scale: 0.95,
+          filter: "blur(8px)",
+        })
+        textTl.restart()
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+
     return () => {
+      textTl.kill()
       tl.kill()
       ScrollTrigger.getAll().forEach(t => t.kill())
+      window.removeEventListener("scroll", onScroll)
     }
   }, [])
 
@@ -267,9 +318,12 @@ function DesktopHero() {
               justifyContent: "center",
               paddingLeft: "4vw",
               pointerEvents: "none",
+              perspective: "1000px",
+              transformStyle: "preserve-3d",
             }}
           >
-            <motion.h1
+            <h1
+              ref={headingRef}
               style={{
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 900,
@@ -281,14 +335,11 @@ function DesktopHero() {
                 margin: 0,
                 letterSpacing: "-0.04em",
               }}
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
             >
               STEP INTO THE<br />
               SPOTLIGHT WITH<br />
               SOLDOUT!
-            </motion.h1>
+            </h1>
             <motion.p style={{
               marginTop: 28,
               fontSize: "32px",
