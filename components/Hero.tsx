@@ -11,10 +11,10 @@ const RIGHT_VIDEOS = [
 ]
 
 const PANELS = [
-  { label: "Mumbai 2.0", img: "/videos/hero-placeholder-1.png" },
-  { label: "Mexican Lounge", img: "/videos/hero-placeholder-2.png" },
-  { label: "The Emirates Experience", img: "/videos/hero-placeholder-3.png" },
-  { label: "Mumbai Premium", img: "/videos/hero-placeholder-4.png" },
+  { label: "Mumbai 2.0", src: "/assets/videos/Mumbai_2.0.mp4" },
+  { label: "Mexican Lounge", src: "/assets/videos/Copy_of_Mexican_Lounge.mp4" },
+  { label: "The Emirates Experience", src: "/assets/videos/The_Emirates_Experience.mp4" },
+  { label: "Mumbai Premium", src: "/assets/videos/Mumbai_2.0.mp4" },
 ]
 
 const N = PANELS.length
@@ -41,7 +41,9 @@ function MobileHero() {
               lineHeight: 0.88,
               whiteSpace: "nowrap",
               letterSpacing: "-0.04em",
-              color: "#EB0000"
+              color: "#EB0000",
+              willChange: "transform",
+              transform: "translateZ(0)"
             }}
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -83,7 +85,8 @@ function MobileHero() {
             <div key={i} className="relative rounded-2xl overflow-hidden"
               style={{ aspectRatio: "9/5.5", backgroundColor: "#111" }}>
               <video src={vid.src} autoPlay loop muted playsInline preload="none"
-                className="absolute inset-0 w-full h-full object-cover" />
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ willChange: "transform", transform: "translateZ(0)" }} />
               <div className="absolute inset-0"
                 style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)" }} />
               <div className="absolute bottom-3 left-4 z-10">
@@ -103,11 +106,24 @@ function MobileHero() {
 /* ─── DESKTOP ─── */
 function DesktopHero() {
   const sectionRef = useRef<HTMLElement>(null)
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([null, null, null, null])
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
   const scrollHintRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [segmentFill, setSegmentFill] = useState(0)
+
+  // Optimization: Pause videos that aren't visible
+  useEffect(() => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return
+      if (i === activeIndex) {
+        video.play().catch(() => {})
+      } else {
+        video.pause()
+      }
+    })
+  }, [activeIndex])
 
   const scrollToContact = () => {
     const el = document.querySelector("#contact")
@@ -120,7 +136,7 @@ function DesktopHero() {
     // Register here (client-only) to avoid SSR window errors on Vercel
     gsap.registerPlugin(ScrollTrigger)
 
-    // H1 — initial state: tilted in 3D, blurred
+    // H1 — initial state: tilted in 3D
     gsap.set(headingRef.current, {
       opacity: 0,
       y: 40,
@@ -129,7 +145,6 @@ function DesktopHero() {
       transformPerspective: 1000,
       transformOrigin: "left center",
       scale: 0.95,
-      filter: "blur(8px)",
     })
 
     // H1 premium twist-in with overshoot
@@ -141,7 +156,6 @@ function DesktopHero() {
         rotationX: -5,
         rotationY: 5,
         scale: 1.02,
-        filter: "blur(2px)",
         duration: 0.8,
         ease: "power3.out",
       })
@@ -149,7 +163,6 @@ function DesktopHero() {
         rotationX: 0,
         rotationY: 0,
         scale: 1,
-        filter: "blur(0px)",
         duration: 0.4,
         ease: "power2.inOut",
       })
@@ -172,7 +185,7 @@ function DesktopHero() {
         trigger: sectionRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: 1,
+        scrub: 0.5, // Reduced from 1 for better performance
         onUpdate: (self) => {
           const progress = self.progress
           const idx = Math.min(Math.floor(progress * N), N - 1)
@@ -202,18 +215,11 @@ function DesktopHero() {
       duration: settleDur,
     }, 0)
     tl.to(cardRefs.current[0], {
-      filter: "blur(6px)",
-      duration: 0.1,
-    }, 0)
-    tl.to(cardRefs.current[0], {
-      filter: "blur(0px)",
-      duration: 0.1,
-    }, 0.1)
-    tl.to(cardRefs.current[0], {
       x: "70vw",
       y: "-200vh",
       rotation: 30,
       scale: 0.85,
+      opacity: 0,
       ease: "power3.inOut",
       duration: exitDur,
     }, settleDur + gap)
@@ -235,22 +241,13 @@ function DesktopHero() {
         duration: enterDur,
       }, enterStart)
 
-      tl.to(cardRefs.current[i], {
-        filter: "blur(6px)",
-        duration: 0.1,
-      }, enterStart)
-
-      tl.to(cardRefs.current[i], {
-        filter: "blur(0px)",
-        duration: 0.1,
-      }, enterStart + 0.1)
-
       if (i < N - 1) {
         tl.to(cardRefs.current[i], {
           x: "70vw",
           y: "-200vh",
           rotation: 30,
           scale: 0.85,
+          opacity: 0,
           ease: "power3.inOut",
           duration: exitDur,
         }, exitStart)
@@ -264,10 +261,9 @@ function DesktopHero() {
         gsap.set(headingRef.current, {
           opacity: 0,
           y: 40,
-          rotationX: 40,
-          rotationY: -15,
+          transformPerspective: 1000,
+          transformOrigin: "left center",
           scale: 0.95,
-          filter: "blur(8px)",
         })
         textTl.restart()
       }
@@ -299,7 +295,7 @@ function DesktopHero() {
         style={{
           position: "relative",
           width: "100%",
-          height: "1500vh",
+          height: "500vh", // Reduced from 1500vh for much better performance
           backgroundColor: "#ffffff",
         }}
       >
@@ -331,22 +327,26 @@ function DesktopHero() {
               pointerEvents: "none",
               perspective: "1000px",
               transformStyle: "preserve-3d",
+              willChange: "transform",
+              transform: "translateZ(0)",
             }}
           >
             <h1
-              ref={headingRef}
-              style={{
-                fontFamily: "'Sora', sans-serif",
-                fontWeight: 900,
-                color: "#EB0000",
-                fontSize: "clamp(3rem, 8.5vw, 130px)",
-                lineHeight: 0.88,
-                textTransform: "uppercase",
-                whiteSpace: "nowrap",
-                margin: 0,
-                letterSpacing: "-0.04em",
-              }}
-            >
+                ref={headingRef}
+                style={{
+                  fontFamily: "'Sora', sans-serif",
+                  fontWeight: 900,
+                  color: "#EB0000",
+                  fontSize: "clamp(3rem, 8.5vw, 130px)",
+                  lineHeight: 0.88,
+                  textTransform: "uppercase",
+                  whiteSpace: "nowrap",
+                  margin: 0,
+                  letterSpacing: "-0.04em",
+                  willChange: "transform",
+                  transform: "translateZ(0)",
+                }}
+              >
               STEP INTO THE<br />
               SPOTLIGHT WITH<br />
               SOLDOUT!
@@ -416,16 +416,23 @@ function DesktopHero() {
                   zIndex: 10,
                   overflow: "hidden",
                   willChange: "transform",
+                  transform: "translateZ(0)",
                 }}
               >
-                <img
-                  src={panel.img}
-                  alt={panel.label}
+                <video
+                  ref={el => { videoRefs.current[i] = el }}
+                  src={panel.src}
+                  loop
+                  muted
+                  playsInline
+                  preload="none"
                   style={{
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
                     display: "block",
+                    willChange: "transform",
+                    transform: "translateZ(0)",
                   }}
                 />
               </div>
