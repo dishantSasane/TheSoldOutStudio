@@ -18,7 +18,7 @@ function MobileAbout() {
   useEffect(() => {
     if (!sectionRef.current || !headingRef.current) return
 
-    // Initial hidden state — 3D tilt + blur (mirrors Hero H1)
+    // Initial hidden state — 3D tilt, no blur (blur is expensive on mobile)
     gsap.set(headingRef.current, {
       opacity: 0,
       y: 40,
@@ -27,7 +27,6 @@ function MobileAbout() {
       transformPerspective: 800,
       transformOrigin: "left center",
       scale: 0.95,
-      filter: "blur(8px)",
     })
     if (paraRef.current) {
       gsap.set(paraRef.current, { opacity: 0, y: 20 })
@@ -38,28 +37,26 @@ function MobileAbout() {
         trigger: sectionRef.current,
         start: "top 75%",
         end:   "top 20%",
-        scrub: 1,          // plays forward on scroll down, reverses on scroll up
+        scrub: 0.5,        // lighter than 1 — less lag on mid-range devices
       },
     })
 
-    // Phase 1 — fade in, rise, 3D overshoot, blur to 2px
+    // Phase 1 — fade in, rise, 3D overshoot
     tl.to(headingRef.current, {
       opacity: 1,
       y: 0,
       rotationX: -5,
       rotationY: 5,
       scale: 1.02,
-      filter: "blur(2px)",
       duration: 0.65,
       ease: "power3.out",
     }, 0)
 
-    // Phase 2 — snap flat, scale back, clear blur
+    // Phase 2 — snap flat, scale back
     tl.to(headingRef.current, {
       rotationX: 0,
       rotationY: 0,
       scale: 1,
-      filter: "blur(0px)",
       duration: 0.35,
       ease: "power2.inOut",
     })
@@ -116,6 +113,8 @@ function MobileAbout() {
             padding: "16px 24px",
             display: "inline-block",
             fontFamily: "Arial, sans-serif",
+            willChange: "transform",
+            backfaceVisibility: "hidden",
           }}
         >
           THE CREATIVE FORCE
@@ -128,7 +127,7 @@ function MobileAbout() {
         <p
           ref={paraRef}
           className="mt-4 text-sm leading-relaxed"
-          style={{ color: "rgba(255,255,255,0.85)" }}
+          style={{ color: "rgba(255,255,255,0.85)", willChange: "transform", backfaceVisibility: "hidden" }}
         >
           We&apos;re not just another marketing agency — we&apos;re your content and growth partner. At SoldOut, we create high-impact content and manage your entire social presence from end to end.
         </p>
@@ -220,7 +219,7 @@ function DesktopAbout() {
         style={{ perspective: "800px", transformStyle: "preserve-3d" }}
       >
         {/* Left: red box / heading */}
-        <div ref={redBoxRef} style={{ flex: "0 0 auto", maxWidth: 540 }}>
+        <div ref={redBoxRef} style={{ flex: "0 0 auto", maxWidth: 540, willChange: "transform", backfaceVisibility: "hidden" }}>
           <h2 className="font-black uppercase text-white" style={{
             fontSize: "clamp(1.8rem, 4.8vw, 3.4rem)",
             lineHeight: 0.98,
@@ -243,11 +242,13 @@ function DesktopAbout() {
         <div 
           ref={boxRef}
           className="ml-auto max-w-[480px] flex flex-col justify-center gap-4"
-          style={{ 
-            backgroundColor: "#FFFFFF", 
-            padding: "40px", 
+          style={{
+            backgroundColor: "#FFFFFF",
+            padding: "40px",
             boxShadow: "0 10px 40px rgba(0,0,0,0.15)",
-            zIndex: 20
+            zIndex: 20,
+            willChange: "transform",
+            backfaceVisibility: "hidden",
           }}
         >
           <motion.p

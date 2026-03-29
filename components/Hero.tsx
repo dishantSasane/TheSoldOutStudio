@@ -1,129 +1,30 @@
 "use client"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { motion } from "framer-motion"
 
-const RIGHT_VIDEOS = [
-  { src: "/assets/videos/Mumbai_2.0.mp4", label: "Mumbai 2.0" },
-  { src: "/assets/videos/Copy_of_Mexican_Lounge.mp4", label: "Mexican Lounge" },
-  { src: "/assets/videos/The_Emirates_Experience.mp4", label: "The Emirates Experience" },
-]
-
 const PANELS = [
-  { label: "Mumbai 2.0", src: "/assets/videos/Mumbai_2.0.mp4" },
-  { label: "Mexican Lounge", src: "/assets/videos/Copy_of_Mexican_Lounge.mp4" },
+  { label: "Mumbai 2.0",              src: "/assets/videos/Mumbai_2.0.mp4" },
+  { label: "Mexican Lounge",          src: "/assets/videos/Copy_of_Mexican_Lounge.mp4" },
   { label: "The Emirates Experience", src: "/assets/videos/The_Emirates_Experience.mp4" },
-  { label: "Mumbai Premium", src: "/assets/videos/Mumbai_2.0.mp4" },
+  { label: "Mumbai Premium",          src: "/assets/videos/Mumbai_2.0.mp4" },
 ]
 
 const N = PANELS.length
 
-// Card dimensions — centered on viewport
-const CARD_WIDTH = "64vw"
-const CARD_HEIGHT = "44vh"
-const CARD_LEFT = "34vw"   // starts at 34% from left (overlaps H1 right edge)
-const CARD_TOP = "65vh"    // starts at 65% from top (bottom-right corner)
+// Wider/taller clamp values give cards more screen presence on small devices
+const CARD_WIDTH  = "clamp(220px, 80vw, 900px)"
+const CARD_HEIGHT = "clamp(180px, 50vh, 600px)"
+const CARD_LEFT   = "34vw"
+const CARD_TOP    = "65vh"
 
-/* ─── MOBILE ─── */
-function MobileHero() {
-  const scrollToContact = () => {
-    const el = document.querySelector("#contact")
-    if (el) el.scrollIntoView({ behavior: "smooth" })
-  }
-  return (
-    <>
-      <section className="relative w-full overflow-hidden" style={{ height: "100svh", minHeight: 560, backgroundColor: "#FFFFFF" }}>
-        <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-20">
-          <motion.h1 className="font-black uppercase"
-            style={{
-              fontSize: "clamp(3.5rem, 15vw, 6.5rem)",
-              lineHeight: 0.88,
-              whiteSpace: "nowrap",
-              letterSpacing: "-0.04em",
-              color: "#EB0000",
-              willChange: "transform",
-              transform: "translateZ(0)"
-            }}
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            STEP INTO THE<br />
-            SPOTLIGHT WITH<br />
-            SOLDOUT!
-          </motion.h1>
-          <motion.p className="mt-6 text-lg font-bold" style={{ color: "#EB0000" }}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          >
-            No one can miss you now
-          </motion.p>
-          <motion.div className="mt-8"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          >
-            <button onClick={scrollToContact}
-              className="inline-flex items-center px-10 py-4 rounded-full font-bold text-white text-base"
-              style={{ backgroundColor: "#EB0000" }}>
-              Get a Quote
-            </button>
-          </motion.div>
-        </div>
-      </section>
-      <section className="w-full py-14" style={{ backgroundColor: "#0a0a0a" }}>
-        <div className="px-6 mb-8">
-          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#EB0000" }}>Our Work</p>
-          <h2 className="font-black text-white uppercase text-2xl leading-tight">
-            Campaigns That<br />Command Attention
-          </h2>
-        </div>
-        <div className="flex flex-col gap-3 px-4">
-          {RIGHT_VIDEOS.map((vid, i) => (
-            <div key={i} className="relative rounded-2xl overflow-hidden"
-              style={{ aspectRatio: "9/5.5", backgroundColor: "#111" }}>
-              <video src={vid.src} autoPlay loop muted playsInline preload="none"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ willChange: "transform", transform: "translateZ(0)" }} />
-              <div className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)" }} />
-              <div className="absolute bottom-3 left-4 z-10">
-                <p className="text-xs font-bold uppercase tracking-widest mb-0.5" style={{ color: "#EB0000" }}>
-                  Now Playing
-                </p>
-                <p className="text-sm font-black text-white uppercase tracking-wide">{vid.label}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </>
-  )
-}
-
-/* ─── DESKTOP ─── */
-function DesktopHero() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+function UnifiedHero() {
+  const sectionRef    = useRef<HTMLElement>(null)
+  const cardRefs      = useRef<(HTMLDivElement | null)[]>([])
   const scrollHintRef = useRef<HTMLDivElement>(null)
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [segmentFill, setSegmentFill] = useState(0)
-
-  // Optimization: Pause videos that aren't visible
-  useEffect(() => {
-    videoRefs.current.forEach((video, i) => {
-      if (!video) return
-      if (i === activeIndex) {
-        video.play().catch(() => {})
-      } else {
-        video.pause()
-      }
-    })
-  }, [activeIndex])
+  const headingRef    = useRef<HTMLHeadingElement>(null)
+  const mainVideoRef  = useRef<HTMLVideoElement | null>(null)
 
   const scrollToContact = () => {
     const el = document.querySelector("#contact")
@@ -133,64 +34,110 @@ function DesktopHero() {
   useEffect(() => {
     if (!sectionRef.current) return
 
-    // Register here (client-only) to avoid SSR window errors on Vercel
     gsap.registerPlugin(ScrollTrigger)
+    ScrollTrigger.config({ ignoreMobileResize: true })
+    gsap.ticker.lagSmoothing(500, 33)
+    gsap.ticker.fps(60)
 
-    // H1 — initial state: tilted in 3D
+    // matchMedia is orientation-aware and accurate on real devices.
+    // window.innerWidth can be stale after orientation change.
+    const mq       = window.matchMedia("(max-width: 767px)")
+    const isMobile = mq.matches
+
+    // ── Single video element ──────────────────────────────────────────────
+    const mainVideo = document.createElement("video")
+    mainVideo.loop  = true
+    mainVideo.muted = true
+    mainVideo.setAttribute("playsinline", "")
+    mainVideo.preload = "none"
+    mainVideo.src     = PANELS[0].src
+    Object.assign(mainVideo.style, {
+      width: "100%", height: "100%",
+      objectFit: "cover", display: "block",
+      transform: "translateZ(0)",
+      backfaceVisibility: "hidden",
+    })
+    mainVideoRef.current = mainVideo
+
+    const firstCard = cardRefs.current[0]
+    if (firstCard) {
+      firstCard.appendChild(mainVideo)
+      mainVideo.load()
+      mainVideo.play().catch(() => {})
+    }
+
+    // ── Preloader — fetches next panel's bytes in the background ──────────
+    const preloader = document.createElement("video")
+    preloader.muted   = true
+    preloader.preload = "auto"
+
+    const preloadNext = (nextIdx: number) => {
+      preloader.src = PANELS[nextIdx].src
+      preloader.load()
+    }
+    if (N > 1) preloadNext(1)
+
+    // ── H1 twist-in ──────────────────────────────────────────────────────
+    // Reduced perspective on mobile: lighter GPU matrix math
+    const perspectiveVal = isMobile ? 600 : 1000
+
     gsap.set(headingRef.current, {
-      opacity: 0,
-      y: 40,
-      rotationX: 40,
-      rotationY: -15,
-      transformPerspective: 1000,
+      opacity: 0, y: 40,
+      rotationX: 40, rotationY: -15,
+      transformPerspective: perspectiveVal,
       transformOrigin: "left center",
       scale: 0.95,
     })
 
-    // H1 premium twist-in with overshoot
     const textTl = gsap.timeline()
     textTl
       .to(headingRef.current, {
-        opacity: 1,
-        y: 0,
-        rotationX: -5,
-        rotationY: 5,
-        scale: 1.02,
-        duration: 0.8,
-        ease: "power3.out",
+        opacity: 1, y: 0, rotationX: -5, rotationY: 5, scale: 1.02,
+        duration: isMobile ? 0.6 : 0.8, ease: "power3.out",
       })
       .to(headingRef.current, {
-        rotationX: 0,
-        rotationY: 0,
-        scale: 1,
-        duration: 0.4,
-        ease: "power2.inOut",
+        rotationX: 0, rotationY: 0, scale: 1,
+        duration: isMobile ? 0.3 : 0.4, ease: "power2.inOut",
       })
 
-    // Set initial states — card 0 at bottom-right anchor, others off-screen below
+    // ── Card initial states ───────────────────────────────────────────────
     gsap.set(cardRefs.current[0], { x: 0, y: 0, z: -200, scale: 0.85, rotation: 0, opacity: 0.6 })
     for (let i = 1; i < N; i++) {
-      gsap.set(cardRefs.current[i], {
-        x: "-8vw",
-        y: "60vh",    // CSS top:65vh + 60vh = 125vh → off screen below
-        z: -200,
-        scale: 0.85,
-        rotation: -20,
-        opacity: 0.6
-      })
+      gsap.set(cardRefs.current[i], { x: "-8vw", y: "60vh", z: -200, scale: 0.85, rotation: -20, opacity: 0.6 })
     }
+
+    // ── ScrollTrigger ─────────────────────────────────────────────────────
+    // Lower scrub on mobile: touch momentum + 0.5 lerp = perceptible lag.
+    // 0.3 tracks fingers more tightly on real devices.
+    let currentIdx   = 0
+    let lastProgress = 0
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: 0.5, // Reduced from 1 for better performance
+        scrub: isMobile ? 0.3 : 0.5,
         onUpdate: (self) => {
           const progress = self.progress
+
+          if (Math.abs(progress - lastProgress) < 0.005) return
+          lastProgress = progress
+
           const idx = Math.min(Math.floor(progress * N), N - 1)
-          setActiveIndex(idx)
-          setSegmentFill(Math.max(0, Math.min((progress * N - idx) * 100, 100)))
+
+          if (idx !== currentIdx) {
+            currentIdx = idx
+            const newCard = cardRefs.current[idx]
+            if (newCard && mainVideo) {
+              mainVideo.src = PANELS[idx].src
+              mainVideo.load()
+              newCard.appendChild(mainVideo)
+              mainVideo.play().catch(() => {})
+            }
+            preloadNext((idx + 1) % N)
+          }
+
           if (scrollHintRef.current) {
             scrollHintRef.current.style.opacity = progress > 0.03 ? "0" : "1"
           }
@@ -198,70 +145,58 @@ function DesktopHero() {
       },
     })
 
-    // CY = center y offset: CARD_TOP(65vh) + CY = 38vh (below navbar) → CY = -27vh
-    const CY = "-27vh"
-    const settleDur = 0.20   // card 0 rises from bottom-right to center
-    const exitDur = 0.18   // card arcs out upper-right
-    const enterDur = 0.20   // card arcs in from lower-left to center
-    const gap = 0.05   // tiny pause between phases
+    const CY        = "-27vh"
+    const settleDur = isMobile ? 0.16 : 0.20
+    const exitDur   = isMobile ? 0.14 : 0.18
+    const enterDur  = isMobile ? 0.16 : 0.20
+    const gap       = 0.05
+    // Reduced rotation intensity on mobile: less GPU overdraw at extreme angles
+    const exitRotation = isMobile ? 10 : 20
+    const exitScale    = isMobile ? 0.92 : 0.9
 
-    // Card 0: visible at bottom-right on load → rises to center → exits upper-right
     tl.to(cardRefs.current[0], {
-      y: CY,
-      z: 0,
-      scale: 1,
-      opacity: 1,
-      ease: "power3.out",
-      duration: settleDur,
+      y: CY, z: 0, scale: 1, opacity: 1,
+      ease: "power3.out", duration: settleDur,
     }, 0)
     tl.to(cardRefs.current[0], {
-      x: "70vw",
-      y: "-200vh",
-      rotation: 30,
-      scale: 0.85,
-      opacity: 0,
-      ease: "power3.inOut",
-      duration: exitDur,
+      x: "45vw", y: "-120vh", rotation: exitRotation, scale: exitScale, opacity: 0,
+      ease: "power3.inOut", duration: exitDur,
     }, settleDur + gap)
 
-    // Cards 1–3: arc in from below to center, then arc out upper-right
     let nextEnterTime = settleDur + gap + exitDur
     for (let i = 1; i < N; i++) {
       const enterStart = nextEnterTime
-      const exitStart = enterStart + enterDur + gap
+      const exitStart  = enterStart + enterDur + gap
 
       tl.to(cardRefs.current[i], {
-        x: 0,
-        y: CY,
-        z: 0,
-        scale: 1,
-        rotation: 0,
-        opacity: 1,
-        ease: "power3.out",
-        duration: enterDur,
+        x: 0, y: CY, z: 0, scale: 1, rotation: 0, opacity: 1,
+        ease: "power3.out", duration: enterDur,
       }, enterStart)
 
       if (i < N - 1) {
         tl.to(cardRefs.current[i], {
-          x: "70vw",
-          y: "-200vh",
-          rotation: 30,
-          scale: 0.85,
-          opacity: 0,
-          ease: "power3.inOut",
-          duration: exitDur,
+          x: "45vw", y: "-120vh", rotation: exitRotation, scale: exitScale, opacity: 0,
+          ease: "power3.inOut", duration: exitDur,
         }, exitStart)
         nextEnterTime = exitStart + exitDur
       }
     }
 
-    // Replay H1 twist-in whenever page reaches scroll top (logo click or back-scroll)
+    // Pause video when section is fully offscreen
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top bottom",
+      end: "bottom top",
+      onLeave:      () => mainVideo.pause(),
+      onEnterBack:  () => mainVideo.play().catch(() => {}),
+    })
+
+    // Replay H1 on scroll-to-top
     const onScroll = () => {
       if (window.scrollY === 0) {
         gsap.set(headingRef.current, {
-          opacity: 0,
-          y: 40,
-          transformPerspective: 1000,
+          opacity: 0, y: 40,
+          transformPerspective: perspectiveVal,
           transformOrigin: "left center",
           scale: 0.95,
         })
@@ -270,11 +205,15 @@ function DesktopHero() {
     }
     window.addEventListener("scroll", onScroll, { passive: true })
 
-    // Refresh ScrollTrigger after fonts + images finish loading so
-    // scroll distances are accurate (Vercel loads assets async)
+    // Orientation change: let the viewport settle (100ms) then recalculate
+    // scroll positions — fixes layout glitches after device rotation
+    const onOrientationChange = () => {
+      setTimeout(() => ScrollTrigger.refresh(), 150)
+    }
+    window.addEventListener("orientationchange", onOrientationChange)
+
     const refreshOnLoad = () => ScrollTrigger.refresh()
     window.addEventListener("load", refreshOnLoad)
-    // Also refresh after a short delay as a safety net for slow CDN assets
     const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 800)
 
     return () => {
@@ -282,24 +221,29 @@ function DesktopHero() {
       tl.kill()
       ScrollTrigger.getAll().forEach(t => t.kill())
       window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("orientationchange", onOrientationChange)
       window.removeEventListener("load", refreshOnLoad)
       clearTimeout(refreshTimer)
+      mainVideo.pause()
+      mainVideo.src = ""
+      mainVideo.remove()
+      preloader.src = ""
+      preloader.remove()
     }
   }, [])
 
   return (
     <>
-      {/* 900vh scroll track — slow scroll so videos are highlighted */}
       <section
         ref={sectionRef}
         style={{
           position: "relative",
           width: "100%",
-          height: "500vh", // Reduced from 1500vh for much better performance
+          height: "500vh",
           backgroundColor: "#ffffff",
+          contain: "layout paint",
         }}
       >
-        {/* Sticky viewport — locks for entire hero scroll */}
         <div
           style={{
             position: "sticky",
@@ -308,12 +252,14 @@ function DesktopHero() {
             height: "100vh",
             backgroundColor: "#ffffff",
             overflow: "hidden",
-            perspective: "1000px",
+            // perspective set via CSS var — media query reduces it on mobile
+            // without JS, avoiding layout thrash on orientation change
+            perspective: "var(--hero-perspective, 1000px)",
             transformStyle: "preserve-3d",
+            contain: "layout paint",
           }}
         >
-
-          {/* H1 TEXT — z-index 2, BEHIND cards */}
+          {/* ── H1 TEXT ── */}
           <div
             style={{
               position: "absolute",
@@ -325,46 +271,50 @@ function DesktopHero() {
               justifyContent: "center",
               paddingLeft: "4vw",
               pointerEvents: "none",
-              perspective: "1000px",
+              perspective: "var(--hero-perspective, 1000px)",
               transformStyle: "preserve-3d",
               willChange: "transform",
               transform: "translateZ(0)",
             }}
           >
             <h1
-                ref={headingRef}
-                style={{
-                  fontFamily: "'Sora', sans-serif",
-                  fontWeight: 900,
-                  color: "#EB0000",
-                  fontSize: "clamp(3rem, 8.5vw, 130px)",
-                  lineHeight: 0.88,
-                  textTransform: "uppercase",
-                  whiteSpace: "nowrap",
-                  margin: 0,
-                  letterSpacing: "-0.04em",
-                  willChange: "transform",
-                  transform: "translateZ(0)",
-                }}
-              >
+              ref={headingRef}
+              className="hero-h1"
+              style={{
+                fontFamily: "'Sora', sans-serif",
+                fontWeight: 900,
+                color: "#EB0000",
+                fontSize: "clamp(1.6rem, 8.5vw, 130px)",
+                lineHeight: 0.88,
+                textTransform: "uppercase",
+                // whiteSpace controlled by media query below —
+                // nowrap on desktop, normal on mobile to prevent overflow
+                margin: 0,
+                letterSpacing: "-0.04em",
+                willChange: "transform",
+                backfaceVisibility: "hidden",
+              }}
+            >
               STEP INTO THE<br />
               SPOTLIGHT WITH<br />
               SOLDOUT!
             </h1>
-            <motion.p style={{
-              marginTop: 28,
-              fontSize: "32px",
-              color: "#EB0000",
-              fontWeight: 500,
-              fontFamily: "Arial, sans-serif",
-            }}
+            <motion.p
+              style={{
+                marginTop: 28,
+                fontSize: "clamp(1rem, 2.5vw, 32px)",
+                color: "#EB0000",
+                fontWeight: 500,
+                fontFamily: "Arial, sans-serif",
+              }}
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             >
               No one can miss you now
             </motion.p>
-            <motion.div style={{ marginTop: 40, pointerEvents: "auto" }}
+            <motion.div
+              style={{ marginTop: 40, pointerEvents: "auto" }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
@@ -399,52 +349,27 @@ function DesktopHero() {
             </motion.div>
           </div>
 
-          {/* CARDS — absolutely positioned, GSAP handles all transforms
-              Each card starts at the same CARD_TOP position;
-              initial offsets are applied via gsap.set in useEffect */}
-          {PANELS.map((panel, i) => {
-            const card = (
-              <div
-                key={i}
-                ref={el => { cardRefs.current[i] = el }}
-                style={{
-                  position: "absolute",
-                  left: CARD_LEFT,
-                  top: CARD_TOP,
-                  width: CARD_WIDTH,
-                  height: CARD_HEIGHT,
-                  zIndex: 10,
-                  overflow: "hidden",
-                  willChange: "transform",
-                  transform: "translateZ(0)",
-                }}
-              >
-                <video
-                  ref={el => { videoRefs.current[i] = el }}
-                  src={panel.src}
-                  loop
-                  muted
-                  playsInline
-                  preload="none"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                    willChange: "transform",
-                    transform: "translateZ(0)",
-                  }}
-                />
-              </div>
-            )
+          {/* ── CARDS — single video reparented here by useEffect ── */}
+          {PANELS.map((_, i) => (
+            <div
+              key={i}
+              ref={el => { cardRefs.current[i] = el }}
+              style={{
+                position: "absolute",
+                left: CARD_LEFT,
+                top: CARD_TOP,
+                width: CARD_WIDTH,
+                height: CARD_HEIGHT,
+                zIndex: 10,
+                overflow: "hidden",
+                backgroundColor: "#111",
+                willChange: "transform",
+                backfaceVisibility: "hidden",
+              }}
+            />
+          ))}
 
-            // No Framer Motion wrapper here — GSAP exclusively owns all
-            // card transforms via ScrollTrigger. A dual-animation conflict
-            // between Framer Motion and GSAP caused glitches on Vercel.
-            return card
-          })}
-
-          {/* SCROLL HINT */}
+          {/* ── SCROLL HINT ── */}
           <div
             ref={scrollHintRef}
             style={{
@@ -462,8 +387,7 @@ function DesktopHero() {
             }}
           >
             <div style={{
-              width: 1,
-              height: 44,
+              width: 1, height: 44,
               backgroundColor: "#EB0000",
               animation: "scrollPulse 1.4s ease-in-out infinite",
             }} />
@@ -478,7 +402,6 @@ function DesktopHero() {
               Scroll
             </span>
           </div>
-
         </div>
       </section>
 
@@ -487,16 +410,30 @@ function DesktopHero() {
           0%, 100% { transform: scaleY(1); opacity: 1; }
           50%       { transform: scaleY(0.55); opacity: 0.35; }
         }
+
+        /* Reduce 3D perspective cost on mobile GPUs */
+        @media (max-width: 767px) {
+          :root { --hero-perspective: 600px; }
+        }
+        @media (min-width: 768px) {
+          :root { --hero-perspective: 1000px; }
+        }
+
+        /* Prevent H1 overflow on small screens.
+           whiteSpace: nowrap is ideal for desktop typography but causes
+           horizontal scroll on narrow viewports. CSS media query overrides
+           the inline style via the hero-h1 class + !important. */
+        @media (max-width: 767px) {
+          .hero-h1 {
+            white-space: normal !important;
+            word-break: break-word;
+          }
+        }
       `}</style>
     </>
   )
 }
 
 export default function Hero() {
-  return (
-    <>
-      <div className="block md:hidden"><MobileHero /></div>
-      <div className="hidden md:block"><DesktopHero /></div>
-    </>
-  )
+  return <UnifiedHero />
 }
