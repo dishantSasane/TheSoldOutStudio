@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { motion } from "framer-motion"
-gsap.registerPlugin(ScrollTrigger)
 
 const RIGHT_VIDEOS = [
   { src: "/assets/videos/Mumbai_2.0.mp4", label: "Mumbai 2.0" },
@@ -117,6 +116,9 @@ function DesktopHero() {
 
   useEffect(() => {
     if (!sectionRef.current) return
+
+    // Register here (client-only) to avoid SSR window errors on Vercel
+    gsap.registerPlugin(ScrollTrigger)
 
     // H1 — initial state: tilted in 3D, blurred
     gsap.set(headingRef.current, {
@@ -272,11 +274,20 @@ function DesktopHero() {
     }
     window.addEventListener("scroll", onScroll, { passive: true })
 
+    // Refresh ScrollTrigger after fonts + images finish loading so
+    // scroll distances are accurate (Vercel loads assets async)
+    const refreshOnLoad = () => ScrollTrigger.refresh()
+    window.addEventListener("load", refreshOnLoad)
+    // Also refresh after a short delay as a safety net for slow CDN assets
+    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 800)
+
     return () => {
       textTl.kill()
       tl.kill()
       ScrollTrigger.getAll().forEach(t => t.kill())
       window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("load", refreshOnLoad)
+      clearTimeout(refreshTimer)
     }
   }, [])
 
@@ -420,20 +431,9 @@ function DesktopHero() {
               </div>
             )
 
-            if (i === 0) {
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%" }}
-                >
-                  {card}
-                </motion.div>
-              )
-            }
-
+            // No Framer Motion wrapper here — GSAP exclusively owns all
+            // card transforms via ScrollTrigger. A dual-animation conflict
+            // between Framer Motion and GSAP caused glitches on Vercel.
             return card
           })}
 
